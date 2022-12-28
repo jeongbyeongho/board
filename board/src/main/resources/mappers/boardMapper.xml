@@ -53,13 +53,41 @@
 	</select>
 	
 	<!--  게시물 페이징  -->
-	<select id="listPage" parameterType="hashmap" resultType="com.board.domain.BoardVO">
+	<select id="listPage" parameterType="hashMap" resultType="com.board.domain.BoardVO">
 		select
 			num, title, writer, regDate, views
 		from tbl_board
 		order by num desc
-			limit #{displayPost}, #{postNum}							
-	</select>
+			limit #{displayPost}, #{postNum}
+	</select>	
+	
+	
+	
+	<select id="listPageSearch" parameterType="hashMap" resultType="com.board.domain.BoardVO">
+		select
+			num, title, writer, regDate, views
+		from tbl_board
+		
+		 <if test='searchType.equals("title")'>
+		 	 WHERE title LIKE concat('%', #{keyword}, '%')
+		 </if>
+		 
+		 <if test='searchType.equals("content")'>
+		  	WHERE content LIKE concat('%', #{keyword}, '%')
+		 </if>
+		 
+		 <if test='searchType.equals("title_content")'>
+		  	WHERE title LIKE concat('%', #{keyword}, '%') 
+		   		or content LIKE concat('%', #{keyword}, '%')
+		 </if>
+		 
+		 <if test='searchType.equals("writer")'>
+		  	WHERE writer LIKE concat('%', #{keyword}, '%')
+		 </if>
+		 
+		 order by num desc
+		  	limit #{displayPost}, #{postNum}
+</select> 
 	
 	
 

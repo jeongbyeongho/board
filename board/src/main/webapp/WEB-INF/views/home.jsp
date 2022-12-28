@@ -77,7 +77,10 @@
 	.right_logout{
 		border-radius:5px;
 		border:0;
-	
+	}
+	.img{
+		float:left;
+		width:10%;
 	}
 
 	
@@ -140,6 +143,7 @@
 	
 	<header>
 		<div>
+		<span class="img"><img src="/resources/images/image/neotek_img.png" title="neotek_logo" width=100px;></span>
 			<h1>헬스장 추천 게시판</h1>
 			<hr color="green">	
 				<div>
@@ -155,8 +159,7 @@
 			<ul>
 				<li><button onclick="location.href='/board/write'" class="list_button">게시물 작성</button></li>
 				<li><button onclick="location.href='/board/list'" class="list_button">게시물 목록</button></li>
-				<br>
-			
+				
 			</ul>
 		<!-- <a href="/board/write">게시물 작성</a>  -->
 			<!-- <a href="member/logout" onclick="alert('${member.userName}님 로그아웃 되었습니다.')">로그아웃</a>  -->
