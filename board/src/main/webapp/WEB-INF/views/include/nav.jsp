@@ -5,9 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 </head>
 <body>
-<ul>
+
+<ul class="nav nav-pills">
 	<li>
 		<a href="/board/listPageSearch?num=1">글 목록(페이징 + 검색)</a>
 	</li>
@@ -20,6 +22,13 @@
 	</li>
 	<li>
 		<a href="/board/write">글 작성</a>
+	</li>
+	<li>
+		<a href="../../">메인으로</a>
+	</li>
+	
+	<li>
+		<button type="button" onclick="location.href='member/logout'; alert('${member.userName}님 로그아웃 되었습니다.');">로그아웃</button>
 	</li>
 </ul>
 
