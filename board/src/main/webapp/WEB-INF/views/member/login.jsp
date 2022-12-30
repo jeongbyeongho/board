@@ -171,32 +171,4 @@
 		alert("${member.userName}님 환영합니다.");
 		location.href="/board/listPageSearch?num=1";
 	</script>
-	
-	<header>
-			<span class="img"><img src="/resources/images/image/neotek_img.png" title="neotek_logo"width=100px height=100% ></span>
-			<h2 style="white-space:nowrap">헬스장 추천 게시판</h2>			
-			<div class="logbtn_bar">
-				<button type="button" class="right_logout" onclick="location.href='/member/logout';alert('${member.userName}님 로그아웃 되었습니다.');"><span>로그아웃</span></button>
-				<span>${member.userName}님</span>
-				
-			</div>
-	</header>
-	
-	
-			
-	<section>
-		<div class="main_content">
-			<p>현재 시간은 ${serverTime} 입니다. </p>
-			<img src="/resources/images/image/health.jpg" title="neotek_logo" class="main_img" width="85%" height=210px >
-			<button onclick="location.href='/board/write'" class="list_button">게시물 작성</button>
-			<button onclick="location.href='/board/listPageSearch?num=1'" class="list_button">게시물 목록</button>
-			<!-- <a href="/board/write">게시물 작성</a>  -->
-			<!-- <a href="member/logout" onclick="alert('${member.userName}님 로그아웃 되었습니다.')">로그아웃</a>  -->
-		</div>
-	</section>
 </c:if>
-
-	<footer>
-	</footer>
-</body>
-</html>

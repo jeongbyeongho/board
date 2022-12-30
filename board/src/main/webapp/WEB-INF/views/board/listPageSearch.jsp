@@ -41,7 +41,6 @@
 	</thead>
 	
 	<tbody>
-	
 		<c:forEach items="${list}" var="list">
 		 <tr>
 			  <td>${list.num}</td>
@@ -57,13 +56,9 @@
 			  <td>${list.regDate}</td>
 		 </tr>
 		</c:forEach>
-	
 	</tbody>	
-		
-		
-		
 </table>
-
+<!--  
 <div>
 	<c:if test="${page.prev}">
 		<span>[ <a href="/board/listPageSearch?num=${page.startPageNum - 1}">이전</a> ]</span>
@@ -80,11 +75,32 @@
 			</c:if>
 		</span>
 	</c:forEach>
-	
+	 
 	<c:if test="${page.next}">
 		<span>[ <a href="/board/listPageSearch?num=${page.endPageNum + 1}">다음</a> ]</span>
 	</c:if>
 </div>
+-->
+
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <c:if test="${page.prev}">
+		<li class="page-item"><a class="page-link" href="/board/listPageSearch?num=${page.startPageNum - 1}">이전</a></li>
+	</c:if>
+	<c:forEach begin="${page.startPageNum}" end="${page.endPageNum}" var="num">
+		<c:if test="${select != num}">
+	    	<li class="page-item"><a class="page-link" href="/board/listPageSearch?num=${num}">${num}</a></li>
+		</c:if>
+	    <c:if test="${select == num}">
+			<li class="page-item"><a class="page-link"><b>${num}</b></a></li>
+		</c:if>
+    </c:forEach>
+    <c:if test="${page.next}">
+		<li class="page-item"><a class="page-link" href="/board/listPageSearch?num=${page.endPageNum + 1}">다음</a></li>
+	</c:if>
+  </ul>
+</nav>
 
 
 	<%-- <c:forEach begin="1" end="${pageNum}" var="num">
@@ -93,7 +109,7 @@
 		</span>
 	</c:forEach> --%>
 	
-	
+
 	<div class="search row">
 		<div class="col-xs-2 col-sm-2">
 			<select name="searchType" class="form-control">
@@ -103,7 +119,7 @@
 				<option value="writer">작성자</option>
 			</select>
 		</div>
-		<!-- <div class="col-xs-10 col-sm-10"> -->
+
 		<div class="col-xs-10 col-sm-10">
 			<div class="input-group">
 				<input type="text" name="keyword" class="form-control"/>
@@ -111,6 +127,8 @@
 			</div>		
 		</div>
 	</div>
+	
+	
 	
 	<script>
 	document.getElementById("searchBtn").onclick = function(){

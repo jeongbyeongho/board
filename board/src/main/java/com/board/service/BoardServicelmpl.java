@@ -33,6 +33,7 @@ public class BoardServicelmpl implements BoardService {
 	// 게시물 조회
 	@Override
 	public BoardVO view(int num) throws Exception{
+		dao.updateViewCnt(num);
 		return dao.view(num);
 	}
 	
@@ -53,6 +54,10 @@ public class BoardServicelmpl implements BoardService {
 	public int count() throws Exception{
 		return dao.count();
 	}
+	
+	
+	
+	
 	
 	// 게시글 목록 + 페이징
 	@Override

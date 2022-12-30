@@ -62,7 +62,7 @@
 	</select>	
 	
 	
-	
+	<!--  페이징 , 검색  -->
 	<select id="listPageSearch" parameterType="hashMap" resultType="com.board.domain.BoardVO">
 		select
 			num, title, writer, regDate, views
@@ -87,7 +87,14 @@
 		 
 		 order by num desc
 		  	limit #{displayPost}, #{postNum}
-</select> 
+	</select>
+	
+	<!--  조회수 올리기 -->
+	<update id="updateViewCnt">
+		update tbl_board
+		set views = views + 1
+		where num = #{num}
+	</update> 
 	
 	
 

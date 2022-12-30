@@ -2,14 +2,13 @@ package com.board.controller;
 
 
 import java.util.List;
-import java.util.logging.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -57,14 +56,14 @@ public class BoardController {
 	public String postWrite(BoardVO vo) throws Exception{
 		service.write(vo);
 		
-		return "redirect:/board/list";
+		return "redirect:/board/listPageSearch";
 		// 모든 작업을 마치고 /board/list, 게시물 목록 화면으로 이동
 	}
 	
 	// 게시물 조회
 	@RequestMapping(value ="/view", method = RequestMethod.GET)
 	public void getView(@RequestParam("num") int num, Model model) throws Exception{
-		
+		service.view(num);
 		BoardVO vo = service.view(num);
 		model.addAttribute("view", vo);
 	}
@@ -89,8 +88,23 @@ public class BoardController {
 	public String getDelete(@RequestParam("num")int num) throws Exception{
 		service.delete(num);
 		
-		return "redirect:/board/list";
+		return "redirect:/board/listPageSearch?num=1";
 	}
+	
+//	// 조회수 증가
+//	@RequestMapping(value="/views", method=RequestMethod.GET)
+//	public String readReply(BoardVO vo,@RequestParam("num") int num, @ModelAttribute("cri") Criteria cri,Model model)throws Exception{
+//		logger.info("read");
+//		service.views(num);
+//		
+//		model.addAttribute("BoardVO",service.views(num));
+//		
+//		model.addAttribute("cri",cri);
+//		
+//		
+//		
+//		
+//	}
 	
 	// 게시물 목록 + 페이징
 		@RequestMapping(value = "/listPage", method = RequestMethod.GET)

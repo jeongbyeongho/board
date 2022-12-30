@@ -30,4 +30,11 @@ public interface BoardService {
 	public List<BoardVO> listPageSearch(
 			int displayPost, int postNum, String searchType, String keyword) throws Exception;
 	
+	
+		
+		
+	
+		
+	
+	
 }

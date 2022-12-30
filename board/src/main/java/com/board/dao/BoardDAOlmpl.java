@@ -34,6 +34,7 @@ public class BoardDAOlmpl implements BoardDAO {
 	}
 	
 	// 게시물 조회
+	@Override
 	public BoardVO view(int num) throws Exception{
 		return sql.selectOne(namespace+ ".view",num);
 		// selectOne -> 쿼리 결과가 없으면 null 반환
@@ -54,6 +55,11 @@ public class BoardDAOlmpl implements BoardDAO {
 	@Override
 	public int count() throws Exception{
 		return sql.selectOne(namespace+".count");
+	}
+	
+	@Override
+	public void updateViewCnt(int num) throws Exception{
+		sql.update(namespace + ".updateViewCnt",num);
 	}
 	
 	

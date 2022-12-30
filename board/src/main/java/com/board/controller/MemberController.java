@@ -35,7 +35,6 @@ public class MemberController {
 	@RequestMapping(value="/register", method = RequestMethod.POST)
 	public String postRegister(MemberVO vo) throws Exception{
 		Logger.info("post register");
-		
 		service.register(vo);
 		return "redirect:/";
 	}
@@ -61,8 +60,13 @@ public class MemberController {
 		Logger.info("get logout");
 		session.invalidate();
 		
-		return "redirect:/";
-		
-		
+		return "redirect:/";	
+	}
+	// 로그아웃 post
+	@RequestMapping(value="/logout", method = RequestMethod.POST)
+	public String postLogout(MemberVO vo) throws Exception{
+		Logger.info("post logout");
+		service.login(vo);
+		return "redirect:/member/login";
 	}
 }

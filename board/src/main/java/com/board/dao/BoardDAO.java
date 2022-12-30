@@ -31,5 +31,5 @@ public interface BoardDAO {
 	public List<BoardVO> listPageSearch(
 			int displayPost, int postNum, String serachType, String keyword) throws Exception;
 
-	
+	public void updateViewCnt(int num) throws Exception;
 }
