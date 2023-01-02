@@ -39,7 +39,6 @@ public class BoardDAOlmpl implements BoardDAO {
 		return sql.selectOne(namespace+ ".view",num);
 		// selectOne -> 쿼리 결과가 없으면 null 반환
 	}
-	
 	// 게시물 수정
 	@Override
 	public void modify(BoardVO vo) throws Exception{
@@ -56,13 +55,12 @@ public class BoardDAOlmpl implements BoardDAO {
 	public int count() throws Exception{
 		return sql.selectOne(namespace+".count");
 	}
-	
+	// 게시물 조회수 증가
 	@Override
 	public void updateViewCnt(int num) throws Exception{
 		sql.update(namespace + ".updateViewCnt",num);
 	}
-	
-	
+
 	@Override
 	// 게시물 목록, 페이징
 	public List<BoardVO> listPage(int displayPost,int postNum) throws Exception{
@@ -73,7 +71,6 @@ public class BoardDAOlmpl implements BoardDAO {
 		
 		return sql.selectList(namespace+".listPage",data);
 	}
-	
 	
 	// 게시물 목록 + 페이징 + 검색
 	@Override

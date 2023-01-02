@@ -20,7 +20,9 @@
 				values(#{title}, #{content}, #{writer})
 	</insert>
 	
-	<!-- 게시물 조회 -->
+	
+ 	<!-- 게시물 조회 -->
+ 	
 	<select id="view" parameterType="int" resultType="com.board.domain.BoardVO">
 		select
 			num, title, content, writer, regDate, views
@@ -29,6 +31,9 @@
 		where
 			num = #{num}
 	</select>
+	 
+	
+	
 	
 	<!--  게시물 수정 -->
 	<update id="modify" parameterType="com.board.domain.BoardVO">
@@ -90,7 +95,8 @@
 	</select>
 	
 	<!--  조회수 올리기 -->
-	<update id="updateViewCnt">
+	
+	<update id="updateViewCnt" parameterType="int">
 		update tbl_board
 		set views = views + 1
 		where num = #{num}

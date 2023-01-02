@@ -56,30 +56,31 @@ public class BoardController {
 	public String postWrite(BoardVO vo) throws Exception{
 		service.write(vo);
 		
-		return "redirect:/board/listPageSearch";
+		return "redirect:/board/listPageSearch?num=1";
 		// 모든 작업을 마치고 /board/list, 게시물 목록 화면으로 이동
 	}
 	
 	// 게시물 조회
 	@RequestMapping(value ="/view", method = RequestMethod.GET)
 	public void getView(@RequestParam("num") int num, Model model) throws Exception{
-		service.view(num);
 		BoardVO vo = service.view(num);
 		model.addAttribute("view", vo);
+		
+		
 	}
-	
+
+
 	// 게시물 수정
 	@RequestMapping(value="/modify", method = RequestMethod.GET)
 	public void getModify(@RequestParam("num") int num, Model model) throws Exception{
 		BoardVO vo = service.view(num);
-		model.addAttribute("view", vo);
+		model.addAttribute("views", vo);
 	}
 	
 	// 게시물 수정
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
 	public String postModify(BoardVO vo) throws Exception {
 		service.modify(vo);
-		
 		return "redirect:/board/view?num=" + vo.getNum();
 	}
 	
@@ -90,21 +91,6 @@ public class BoardController {
 		
 		return "redirect:/board/listPageSearch?num=1";
 	}
-	
-//	// 조회수 증가
-//	@RequestMapping(value="/views", method=RequestMethod.GET)
-//	public String readReply(BoardVO vo,@RequestParam("num") int num, @ModelAttribute("cri") Criteria cri,Model model)throws Exception{
-//		logger.info("read");
-//		service.views(num);
-//		
-//		model.addAttribute("BoardVO",service.views(num));
-//		
-//		model.addAttribute("cri",cri);
-//		
-//		
-//		
-//		
-//	}
 	
 	// 게시물 목록 + 페이징
 		@RequestMapping(value = "/listPage", method = RequestMethod.GET)

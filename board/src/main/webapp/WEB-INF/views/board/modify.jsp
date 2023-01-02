@@ -15,6 +15,16 @@
 	
 	<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+	
+	<style>
+		.form-control{
+			width: 60%;
+		}
+		.submit-button{
+			margin-left:-7px;
+		}
+	</style>
+
 </head>
 <body>
 
@@ -27,20 +37,17 @@
     	<h1>헬스장 추천 게시판</h1><br>
   	</div>
 	
-	<div data-role="header" class="container">
-    	<h1>헬스장 추천 게시판</h1><br>
-  	</div>
-	
-	
 	<div id="nav" class="container">  
-		<div class="mb-3">
+		<!-- input,text 입력 엘리먼트의 속성 값은 BoardVO와 동일해야 함 -->
+		<div class="row">
+			<div class="mb-3">
 			<label for="exampleFormControlInput1" class="form-label">제목</label>
 			<input type="text" class="form-control" name="title" id="exampleFormControlInput1" value="${view.title}">	
 		</div>	
-		<!-- input,text 입력 엘리먼트의 속성 값은 BoardVO와 동일해야 함 -->
-		<!--  <label>내용</label>
-		<textarea cols="50" rows="5" name="content"></textarea><br>  -->
-		<div class="row">
+			<div class="mb-3">
+				<label for="exampleFormControlTextarea1" class="form-label">내용</label>
+				<textarea class="form-control" id="exampleFormControlTextarea1" name="content" cols="50" rows="8">${view.content}</textarea>
+			</div>
 			<label>작성자</label>
 			<div class="col">
 				<input type="text" class="form-control" name="writer" value="${view.writer}" aria-label="First name">
@@ -48,12 +55,11 @@
 			<div class="col">
 	  		</div>
 			
-			<div class="mb-3">
-				<label for="exampleFormControlTextarea1" class="form-label">내용</label>
-				<textarea class="form-control" id="exampleFormControlTextarea1" name="content" rows="6">${view.content}</textarea>
-			</div>
 		</div>
-		<button type="submit">완료</button>
+		<br>
+		<div class="submit-button">
+			<button type="submit" class="btn btn-info">완료</button>
+		</div>
 	</div>
 	
 

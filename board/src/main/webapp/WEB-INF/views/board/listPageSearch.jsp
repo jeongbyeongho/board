@@ -17,12 +17,22 @@
 	<style>
 		.input-group{
 			display:flex;
-			width:35%;
+			width:25%;
+			height:5%;
+		}
+		.logo{
+			display:flex;
+			padding:10px 0px;
+			
 		}
 	</style>
 </head>
 <body>
-<h2>헬스장 추천 게시판</h2>
+<div class="logo">
+	<img src="/resources/images/image/neotek_img.png" width="10%" >
+	<h2> 헬스장 추천 게시판</h2>
+</div>
+
 
 <div id="nav" class="contatiner">
 	<%@ include file="../include/nav.jsp"%>

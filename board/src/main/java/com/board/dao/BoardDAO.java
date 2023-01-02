@@ -31,5 +31,6 @@ public interface BoardDAO {
 	public List<BoardVO> listPageSearch(
 			int displayPost, int postNum, String serachType, String keyword) throws Exception;
 
+	// 조회수 증가
 	public void updateViewCnt(int num) throws Exception;
 }

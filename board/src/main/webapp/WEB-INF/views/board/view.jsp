@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +16,30 @@
 	
 	<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+	<style>
+		.form-control{
+			width: 60%;
+		}
+		.modify-button{
+			margin-left:-7px;
+		}
+	</style>
+	<script>
+		function deleteAlert(){
+			if(!confirm("삭제 하시겠습니까?")){
+				return false;
+			}else{
+				location.href='/board/delete?num=${view.num}';
+			}
+		}
+		function modifyAlert(){
+			if(!confirm("수정 하시겠습니까?")){
+				return false;
+			}else{
+				location.href='/board/modify?num=${view.num}';
+			}
+		}
+	</script>
 </head>
 <body>
 
@@ -23,55 +48,43 @@
 </div>
 
 
-<label>제목</label>
-${view.title}<br> <!-- input,text 입력 엘리먼트의 속성 값은 BoardVO와 동일해야 함 -->
-
-<label>작성자</label>
-${view.writer}<br>
-
-<label>내용</label>
-${view.content}<br>
-
-
-<div id="nav"class="container">  
-	<div class="mb-3">
-		<label for="exampleFormControlInput1" class="form-label">제목</label>
-		<input type="text" class="form-control" name="title" id="exampleFormControlInput1" placeholder="${view.title}" readonly>	
-	</div>	
+<!-- input,text 입력 엘리먼트의 속성 값은 BoardVO와 동일해야 함 -->
+<form method="post">
+	<div data-role="header" class="container">
+    	<h1>헬스장 추천 게시판</h1><br>
+  	</div>
 	
-	<!--  <label>내용</label>
-	<textarea cols="50" rows="5" name="content"></textarea><br>  -->
-	<div class="mb-3">
-		<label for="exampleFormControlTextarea1" class="form-label">내용</label>
-		<textarea class="form-control" id="exampleFormControlTextarea1" name="content" rows="6" placeholder="${view.content}" readonly></textarea>
-	</div>
-	
-	<div class="row">
-		<label>작성자</label>
-		<div class="col">
-			<input type="text" class="form-control" name="writer" value="${view.writer}" aria-label="First name" readonly>
+	<div id="nav" class="container">  
+		<!-- input,text 입력 엘리먼트의 속성 값은 BoardVO와 동일해야 함 -->
+		<div class="row">
+			<div class="mb-3">
+			<label for="exampleFormControlInput1" class="form-label">제목</label>
+			<input type="text" class="form-control" name="title" id="exampleFormControlInput1" value="${view.title}" readonly>	
+		</div>	
+			<div class="mb-3">
+				<label for="exampleFormControlTextarea1" class="form-label">내용</label>
+				<textarea class="form-control" id="exampleFormControlTextarea1" name="content" cols="50" rows="8" readonly>${view.content}</textarea>
+			</div>
+			<label>작성자</label>
+			<div class="col">
+				<input type="text" class="form-control" name="writer" value="${view.writer}" aria-label="First name" readonly>
+			</div>
+			<div class="col">
+	  		</div>
+			
 		</div>
-		<div class="col">
-  		</div>
+		<br>
+		
+		<c:if test="${member.userName == view.writer}">
+			<div class="modify-button">
+				<button type="button" class="btn btn-info" onclick="modifyAlert();">게시글 수정</button>
+				<button type="button" class="btn btn-info" onclick="deleteAlert();">게시글 삭제</button>
+			</div>
+		</c:if>
 	</div>
-</div>
 	
-	
-	<!--
-	<input type="text" name="writer" value="${member.userName}" /><br>
-	 -->
-	
-	<div class="row">
-		<label>작성자</label>
-		<div class="col">
-			<input type="text" class="form-control" name="writer" value="${member.userName}" aria-label="First name">
-		</div>
-		<div class="col">
-  		</div>
-	</div>
 
-<div>
-	<a href="/board/modify?num=${view.num}">게시물 수정</a>, <a href="/board/delete?num=${view.num}">게시물 삭제</a>
-</div>
+</form>
+	
 </body>
 </html>

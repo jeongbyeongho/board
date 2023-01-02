@@ -25,8 +25,15 @@ public class BoardVO {
 	private String writer;
 	private Date regDate;
 	private int views;
+	private int updateViewCnt;
 	
 	
+	public int getUpdateViewCnt() {
+		return updateViewCnt;
+	}
+	public void setUpdateViewCnt(int updateViewCnt) {
+		this.updateViewCnt = updateViewCnt;
+	}
 	public int getNum() {
 		return num;
 	}

@@ -15,21 +15,21 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.board.domain.MemberVO;
 import com.board.service.MemberService;
 
-@Controller
-@RequestMapping("/member/*")
-public class MemberController {
-	private static final Logger Logger = LoggerFactory.getLogger(MemberController.class);
-	
-	@Inject
-	MemberService service;
-	
-	
-	// 회원가입 get
-	@RequestMapping(value="/register", method = RequestMethod.GET)
-	
-	public void getRegister() throws Exception{
-		Logger.info("get register");
-	}
+	@Controller
+	@RequestMapping("/member/*")
+	public class MemberController {
+		private static final Logger Logger = LoggerFactory.getLogger(MemberController.class);
+		
+		@Inject
+		MemberService service;
+		
+		
+		// 회원가입 get
+		@RequestMapping(value="/register", method = RequestMethod.GET)
+		
+		public void getRegister() throws Exception{
+			Logger.info("get register");
+		}
 	
 //	// 회원가입 post	
 	@RequestMapping(value="/register", method = RequestMethod.POST)
