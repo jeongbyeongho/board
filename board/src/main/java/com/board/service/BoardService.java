@@ -31,7 +31,7 @@ public interface BoardService {
 			int displayPost, int postNum, String searchType, String keyword) throws Exception;
 	
 	
-		
+	
 	
 		
 	
