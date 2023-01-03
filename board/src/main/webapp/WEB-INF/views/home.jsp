@@ -181,7 +181,6 @@
 				
 			</div>
 	</header>
-	
 	<section>
 		<div class="main_content">
 			<p>현재 시간은 ${serverTime} 입니다. </p>
@@ -193,8 +192,5 @@
 		</div>
 	</section>
 </c:if>
-
-	<footer>
-	</footer>
 </body>
 </html>

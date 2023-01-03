@@ -6,7 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<style>
+	.userName{
+		color: #0080FF;
+	}
+</style>
 </head>
 <body>
 
@@ -24,6 +28,9 @@
 	</li>
 	<li>
 		<a href="/board/write">글 작성</a>
+	</li>
+	<li>
+		<a class="userName">${member.userName}님</a>
 	</li>
 	
 	<c:if test="${member != null }">

@@ -48,6 +48,7 @@ import com.board.service.MemberService;
 		if(login==null) {
 			session.setAttribute("member", null);
 			rttr.addFlashAttribute("msg", false);
+			// msg라는 정보에 false라는 값이 들어가서 전송됨. 일회용 값
 		}else {
 			session.setAttribute("member", login);
 		}

@@ -49,6 +49,7 @@
 </table>
 
 <div>
+<!-- 컨트롤러 model.addAttribute("page",page)  page내부의 데이터를 그대로 호출 가능 -->
 	<c:if test="${page.prev}">
 		<span>[ <a href="/board/listPage?num=${page.startPageNum - 1}">이전</a> ]</span>
 	</c:if>

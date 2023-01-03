@@ -59,13 +59,13 @@
 	
 	<!--  게시물 페이징  -->
 	<select id="listPage" parameterType="hashMap" resultType="com.board.domain.BoardVO">
+	<!--  hashMap은 parameterType 여러개 가능 -->
 		select
 			num, title, writer, regDate, views
 		from tbl_board
 		order by num desc
 			limit #{displayPost}, #{postNum}
 	</select>	
-	
 	
 	<!--  페이징 , 검색  -->
 	<select id="listPageSearch" parameterType="hashMap" resultType="com.board.domain.BoardVO">
@@ -101,8 +101,6 @@
 		set views = views + 1
 		where num = #{num}
 	</update> 
-	
-	
 
 </mapper>
 

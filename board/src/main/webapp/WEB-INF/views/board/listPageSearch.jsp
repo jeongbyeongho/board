@@ -42,7 +42,6 @@
 		<tr>
 			<th>번호</th>
 			<th>제목</th>
-			<!-- <th>내용</th>  -->
 			<th>작성일</th>
 			<th>작성자</th>
 			<th>조회수</th>
@@ -119,6 +118,7 @@
 		</span>
 	</c:forEach> --%>
 	
+
 
 	<div class="search row">
 		<div class="col-xs-2 col-sm-2">

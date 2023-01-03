@@ -6,6 +6,7 @@ public class UserDTO {
 	private String username;
 	private String usergender;
 	
+
 	public String getUserid() {
 		return userid;
 	}

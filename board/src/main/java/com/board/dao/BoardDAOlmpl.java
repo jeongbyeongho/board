@@ -65,7 +65,7 @@ public class BoardDAOlmpl implements BoardDAO {
 	// 게시물 목록, 페이징
 	public List<BoardVO> listPage(int displayPost,int postNum) throws Exception{
 		HashMap<String, Integer> data = new HashMap<String, Integer>();
-		// displayPort, postNum
+		// displayPost, postNum
 		data.put("displayPost",displayPost);
 		data.put("postNum",postNum);
 		
@@ -87,5 +87,7 @@ public class BoardDAOlmpl implements BoardDAO {
 				return sql.selectList(namespace + ".listPageSearch", data);
 
 			}
+	
+	
 
 }

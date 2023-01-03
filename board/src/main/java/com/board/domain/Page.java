@@ -23,6 +23,8 @@ public class Page {
 	private boolean prev;
 	private boolean next;
 	
+	// [setter] 입력은 num, count만 필요함
+	
 	public void setNum(int num) {
 		this.num = num;
 	}

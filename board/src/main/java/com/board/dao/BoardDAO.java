@@ -33,4 +33,5 @@ public interface BoardDAO {
 
 	// 조회수 증가
 	public void updateViewCnt(int num) throws Exception;
+	
 }
