@@ -160,7 +160,7 @@
 </form>
 </c:if>
 
-<c:if test="${msg == false}">
+<c:if test="${msg == false}"> <!--  컨트롤러의 msg가 false면 -->
 	<script>
    		alert("로그인에 실패하였습니다. 아이디, 비밀번호를 확인해주세요");
    	</script>

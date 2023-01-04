@@ -25,6 +25,23 @@
 		}
 	</style>
 
+<script>
+	function checkForm(){
+		if(document.io.title.value == ""){
+			alert("제목을 입력해주세요");
+			return;
+		}
+		if(document.io.content.value == ""){
+			alert("내용을 입력해주세요.");
+			return;
+		}
+		if(document.io.writer.value == ""){
+			alert("작성자를 입력해주세요");
+			return;
+		}
+	}
+		
+</script>
 </head>
 <body>
 
@@ -32,7 +49,7 @@
 	<%@ include file="../include/nav.jsp"%>
 </div>
 
-<form method="post">
+<form method="post" name="io">
 	<div data-role="header" class="container">
     	<h1>헬스장 추천 게시판</h1><br>
   	</div>
@@ -46,11 +63,11 @@
 		</div>	
 			<div class="mb-3">
 				<label for="exampleFormControlTextarea1" class="form-label">내용</label>
-				<textarea class="form-control" id="exampleFormControlTextarea1" name="content" cols="50" rows="8">${view.content}</textarea>
+				<textarea class="form-control" id="exampleFormControlTextarea1" name="content" cols="50" rows="12">${view.content}</textarea>
 			</div>
 			<label>작성자</label>
 			<div class="col">
-				<input type="text" class="form-control" name="writer" value="${view.writer}" aria-label="First name">
+				<input type="text" class="form-control" name="writer" value="${view.writer}" aria-label="First name" >
 			</div>
 			<div class="col">
 	  		</div>
@@ -58,7 +75,7 @@
 		</div>
 		<br>
 		<div class="submit-button">
-			<button type="submit" class="btn btn-info">완료</button>
+			<button type="button" class="btn btn-info" onclick="checkForm()">완료</button>
 		</div>
 	</div>
 	

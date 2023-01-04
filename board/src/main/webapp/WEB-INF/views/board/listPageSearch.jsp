@@ -58,8 +58,8 @@
 			  </td>
 			  <td>
 			  	<fmt:formatDate value="${list.regDate}" pattern="yyyy-MM-dd" />
+			  	<!-- fmt:formatDate 날짜 정보를 담고 있는 객체를 포맷팅하여 출력할 때 사용 -->
 			  </td>
-			  <!-- <td>${list.content}</td>  -->
 			  <td>${list.writer}</td>
 			  <td>${list.views}</td>
 			  <td>${list.regDate}</td>

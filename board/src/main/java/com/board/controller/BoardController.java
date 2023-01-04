@@ -51,9 +51,7 @@ public class BoardController {
 	@RequestMapping(value ="/write", method = RequestMethod.POST)
 	// post 방식으로 왔을 때만 로직 수행, get,post 상관없이 로직 수행을 위해선 method 부분 지우면 됨
 	public String postWrite(BoardVO vo) throws Exception{
-		
 		service.write(vo);
-		
 		return "redirect:/board/listPageSearch?num=1";
 		// 모든 작업을 마치고 /board/list, 게시물 목록 화면으로 이동
 	}
@@ -63,11 +61,7 @@ public class BoardController {
 	public void getView(@RequestParam("num") int num, Model model) throws Exception{
 		BoardVO vo = service.view(num);
 		model.addAttribute("view", vo);
-		
-		
 	}
-
-
 	// 게시물 수정
 	@RequestMapping(value="/modify", method = RequestMethod.GET)
 	public void getModify(@RequestParam("num") int num, Model model) throws Exception{

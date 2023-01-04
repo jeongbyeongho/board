@@ -68,11 +68,11 @@
 				</div>	
 					<div class="mb-3">
 						<label for="exampleFormControlTextarea1" class="form-label">내용</label>
-						<textarea class="form-control" id="exampleFormControlTextarea1" name="content" cols="50" rows="8">${view.content}</textarea>
+						<textarea class="form-control" id="exampleFormControlTextarea1" name="content" cols="50" rows="12">${view.content}</textarea>
 					</div>
 					<label>작성자</label>
 					<div class="col">
-						<input type="text" class="form-control" name="writer" value="${member.userName}" aria-label="First name" width="50%">
+						<input type="text" class="form-control" name="writer" value="${member.userName}" aria-label="First name" width="50%" readonly>
 					</div>
 					<div class="col">
 			  		</div>

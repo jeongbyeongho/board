@@ -60,6 +60,7 @@ import com.board.service.MemberService;
 	public String logout(HttpSession session) throws Exception{
 		Logger.info("get logout");
 		session.invalidate();
+		// 현재 사용하는 세션 초기화
 		
 		return "redirect:/";	
 	}

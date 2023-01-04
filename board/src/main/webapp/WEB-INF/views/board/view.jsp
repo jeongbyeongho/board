@@ -63,7 +63,7 @@
 		</div>	
 			<div class="mb-3">
 				<label for="exampleFormControlTextarea1" class="form-label">내용</label>
-				<textarea class="form-control" id="exampleFormControlTextarea1" name="content" cols="50" rows="8" readonly>${view.content}</textarea>
+				<textarea class="form-control" id="exampleFormControlTextarea1" name="content" cols="50" rows="12" readonly>${view.content}</textarea>
 			</div>
 			<label>작성자</label>
 			<div class="col">
