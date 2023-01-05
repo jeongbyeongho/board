@@ -30,10 +30,7 @@ public class BoardController {
 		List<BoardVO> list = null;
 		list = service.list();
 		model.addAttribute("list", list);
-		
 	}
-	
-	
 	// 게시물 작성
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
 	public void getWrite(HttpSession session, Model model) throws Exception{
@@ -65,7 +62,7 @@ public class BoardController {
 	// 게시물 수정
 	@RequestMapping(value="/modify", method = RequestMethod.GET)
 	public void getModify(@RequestParam("num") int num, Model model) throws Exception{
-		BoardVO vo = service.view(num);
+		BoardVO vo = service.view(num); 
 		model.addAttribute("views", vo);
 	}
 	

@@ -5,15 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>게시물 수정</title>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-	<!-- 합쳐지고 최소화된 최신 CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-	
-	<!-- 부가적인 테마 -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-	
-	<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 	
 	<style>
@@ -29,16 +25,17 @@
 	function checkForm(){
 		if(document.io.title.value == ""){
 			alert("제목을 입력해주세요");
-			return;
+			return false;
 		}
 		if(document.io.content.value == ""){
 			alert("내용을 입력해주세요.");
-			return;
+			return false;
 		}
 		if(document.io.writer.value == ""){
 			alert("작성자를 입력해주세요");
-			return;
+			return false;
 		}
+		document.io.submit();
 	}
 		
 </script>
@@ -59,15 +56,15 @@
 		<div class="row">
 			<div class="mb-3">
 			<label for="exampleFormControlInput1" class="form-label">제목</label>
-			<input type="text" class="form-control" name="title" id="exampleFormControlInput1" value="${view.title}">	
+			<input type="text" class="form-control" name="title" id="exampleFormControlInput1" value="${views.title}">	
 		</div>	
 			<div class="mb-3">
 				<label for="exampleFormControlTextarea1" class="form-label">내용</label>
-				<textarea class="form-control" id="exampleFormControlTextarea1" name="content" cols="50" rows="12">${view.content}</textarea>
+				<textarea class="form-control" id="exampleFormControlTextarea1" name="content" cols="50" rows="12">${views.content}</textarea>
 			</div>
 			<label>작성자</label>
 			<div class="col">
-				<input type="text" class="form-control" name="writer" value="${view.writer}" aria-label="First name" >
+				<input type="text" class="form-control" name="writer" value="${views.writer}" aria-label="First name" readonly>
 			</div>
 			<div class="col">
 	  		</div>

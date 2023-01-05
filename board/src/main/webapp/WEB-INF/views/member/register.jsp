@@ -101,11 +101,7 @@
   <input type="text"  class="login" id="userName" name="userName" placeholder="닉네임"/>
  </p>
  
-	<label for="genDer">성별:</label>
-	<p class="gender">
-		남자<input type="radio" id="genDer" value="남자" name="genDer" checked/>
-		여자<input type="radio" id="genDer" value="여자" name="genDer"/>
-	</p>
+	
  
    <button type="submit" id="submit" onclick="return checkForm()">회원가입</button>
        

@@ -5,14 +5,10 @@
 <html>
 <head>
 	<meta charset="UTF-8">
+	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 	<title>게시물 목록</title>
-	<!-- 합쳐지고 최소화된 최신 CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-	
-	<!-- 부가적인 테마 -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-	
-	<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 	<style>
 		.input-group{
@@ -37,6 +33,7 @@
 <div id="nav" class="contatiner">
 	<%@ include file="../include/nav.jsp"%>
 </div>
+<form role="form" method="POST">
 <table class="table table-hover">
 	<thead>
 		<tr>
@@ -67,31 +64,7 @@
 		</c:forEach>
 	</tbody>	
 </table>
-<!--  
-<div>
-	<c:if test="${page.prev}">
-		<span>[ <a href="/board/listPageSearch?num=${page.startPageNum - 1}">이전</a> ]</span>
-	</c:if>
-	
-	<c:forEach begin="${page.startPageNum}" end="${page.endPageNum}" var="num">
-		<span>
-			<c:if test="${select != num}">
-				<a href="/board/listPageSearch?num=${num}">${num}</a>
-			</c:if>
-			
-			<c:if test="${select == num}">
-				<b>${num}</b>
-			</c:if>
-		</span>
-	</c:forEach>
-	 
-	<c:if test="${page.next}">
-		<span>[ <a href="/board/listPageSearch?num=${page.endPageNum + 1}">다음</a> ]</span>
-	</c:if>
-</div>
--->
-
-
+</form>
 <nav aria-label="Page navigation example">
   <ul class="pagination">
     <c:if test="${page.prev}">
@@ -110,51 +83,6 @@
 	</c:if>
   </ul>
 </nav>
-
-
-	<%-- <c:forEach begin="1" end="${pageNum}" var="num">
-		<span>
-			<a href="/board/listPage?num=${num}">${num}</a> }
-		</span>
-	</c:forEach> --%>
-	
-
-
-	<div class="search row">
-		<div class="col-xs-2 col-sm-2">
-			<select name="searchType" class="form-control">
-				<option value="title">제목</option>
-				<option value="content">내용</option>
-				<option value="title_content">제목+내용</option>
-				<option value="writer">작성자</option>
-			</select>
-		</div>
-
-		<div class="col-xs-10 col-sm-10">
-			<div class="input-group">
-				<input type="text" name="keyword" class="form-control"/>
-				<button type="button" id="searchBtn" class="btn btn-default">검색</button>
-			</div>		
-		</div>
-	</div>
-	
-	
-	
-	<script>
-	document.getElementById("searchBtn").onclick = function(){
-		let searchType = document.getElementsByName("searchType")[0].value;
-		let keyword = document.getElementsByName("keyword")[0].value;
-		
-		location.href="/board/listPageSearch?num=1"+"&searchType="+searchType+"&keyword="+keyword;
-		
-		//console.log(searchType)
-		//console.log(keyword)
-	};
-	</script>
-
-
-
-
 
 </body>
 </html>

@@ -154,7 +154,7 @@
    
    <div>
 	   <button type="submit" id="button_login">로그인</button>    
-	   <button type="button" onclick="location.href='/member/register'; return false;" id="button_login">회원가입</button>
+	   <button type="button" onclick="location.href='/member/register';" id="button_login">회원가입</button>
    </div>
   
 </form>
