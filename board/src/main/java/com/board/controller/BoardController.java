@@ -108,8 +108,6 @@ public class BoardController {
 			model.addAttribute("select", num);
 		}
 			
-			
-			
 		
 			@RequestMapping(value="/listPageSearch", method = RequestMethod.GET)
 			public void getListPageSearch(Model model, @RequestParam("num")int num,
@@ -118,7 +116,7 @@ public class BoardController {
 				
 				Page page = new Page();
 				// Page형의 page변수 생성
-				
+			
 				page.setNum(num);
 				page.setCount(service.count());
 				

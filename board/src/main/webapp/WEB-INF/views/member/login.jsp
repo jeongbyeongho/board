@@ -6,6 +6,22 @@
 <head>
 	<title>헬스장 추천 게시판</title>
 </head>
+<script>
+	function checkForm(){
+		if(document.io.userId.value == ""){
+			alert("아이디를 입력해주세요.");
+			document.io.userId.focus();
+			return false;
+		}
+		if(document.io.userPwd.value == ""){
+			alert("비밀번호를 입력해주세요.");
+			document.io.userPwd.focus();
+			return false;
+		}
+		document.io.submit();
+		
+	}
+</script>
 <style>
 
 	*{
@@ -139,7 +155,7 @@
 <body>
 <hr>
 <c:if test="${member == null }">
-<form role="form" method="post" autocomplete="off" action="/member/login">
+<form role="form" method="post" autocomplete="off" action="/member/login" name="io">
 	<h1>헬스 게시판 👊</h1>
    <div class="input-box">
     <label for="userId" class="String"></label><br>
@@ -153,19 +169,20 @@
    
    
    <div>
-	   <button type="submit" id="button_login">로그인</button>    
+	   <button type="submit" id="button_login" onclick="checkForm()">로그인</button>    
 	   <button type="button" onclick="location.href='/member/register';" id="button_login">회원가입</button>
    </div>
   
 </form>
 </c:if>
 
-<c:if test="${msg == false}"> <!--  컨트롤러의 msg가 false면 -->
+<!-- 
+<c:if test="${msg == false}">
 	<script>
    		alert("로그인에 실패하였습니다. 아이디, 비밀번호를 확인해주세요");
    	</script>
 </c:if>
-
+ -->
 <c:if test="${member != null }">
 	<script>
 		alert("${member.userName}님 환영합니다.");

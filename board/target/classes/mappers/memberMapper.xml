@@ -15,4 +15,10 @@
 		from myMember
 		where userId = #{userId} and userPwd = #{userPwd};
 	</select>
+	
+	<select id="idCheck" resultType="com.board.domain.MemberVO">
+		select userId
+		from myMember
+		where userId = #{userId}
+	</select>
 </mapper>

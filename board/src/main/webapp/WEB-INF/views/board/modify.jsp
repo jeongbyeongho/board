@@ -20,21 +20,40 @@
 			margin-left:-7px;
 		}
 	</style>
-
 <script>
+	//history.replaceState({}, null, location.pathname);
+	String referer = request.getHeader("referer");
+	if(referer==null){
+		alert("다시 접근");
+		document.location.href="/";
+	}
+</script>
+<script>
+	
 	function checkForm(){
-		if(document.io.title.value == ""){
-			alert("제목을 입력해주세요");
-			return false;
-		}
-		if(document.io.content.value == ""){
-			alert("내용을 입력해주세요.");
-			return false;
-		}
-		if(document.io.writer.value == ""){
-			alert("작성자를 입력해주세요");
-			return false;
-		}
+		if(document.io.title.value == "") {
+        	alert("제목을 입력하세요");
+        	return;
+        }else if(document.io.title.value.length<5){
+      	 	alert("제목이 너무 짧습니다.");
+       	 	document.io.title.focus();
+       	 	return false;
+        }else if(document.io.title.value.length>30){
+        	alert("제목이 너무 길어요");
+        	document.io.title.focus();
+       	 	return false;
+        }
+		
+		 if(document.io.content.value == "") {
+             alert("내용을 입력하세요");
+             return false;
+         }else if(document.io.content.value.length<10){
+			 alert("내용이 너무 짧습니다.");
+			 return false;
+		 }else if(document.io.content.value.length>401){
+			 alert("작성 허용 범위를 초과했습니다.");
+			 return false;
+		 }
 		document.io.submit();
 	}
 		
@@ -60,7 +79,7 @@
 		</div>	
 			<div class="mb-3">
 				<label for="exampleFormControlTextarea1" class="form-label">내용</label>
-				<textarea class="form-control" id="exampleFormControlTextarea1" name="content" cols="50" rows="12">${views.content}</textarea>
+				<textarea class="form-control" id="exampleFormControlTextarea1" name="content" cols="50" rows="12" maxlength="400">${views.content}</textarea>
 			</div>
 			<label>작성자</label>
 			<div class="col">

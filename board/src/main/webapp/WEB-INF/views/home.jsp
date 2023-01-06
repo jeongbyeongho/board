@@ -6,6 +6,20 @@
 <head>
 	<title>헬스장 추천 게시판</title>
 </head>
+<script>
+	function checkForm(){
+		if(document.io.userId.value ==""){
+			alert("아이디를 입력해주세요.");
+			return false;
+		}
+		if(document.io.userPwd.value ==""){
+			alert("비밀번호를 입력해주세요.");
+			return false;
+		}
+		document.io.submit();
+	}
+	// String myName=(String)request.getAttribute("userID");
+</script>
 <style>
 
 	*{
@@ -30,6 +44,7 @@
 	}
 	h1{
 		text-align:center;
+		font-size:30px;
 	}
 	
 	#button_login{
@@ -135,12 +150,16 @@
 	span{
 		font-size:1.1vw;
 	}
+	.error{
+		text-align:center;
+		color:red;
+	}
 </style>
 <body>
 <hr>
 <c:if test="${member == null }">
-<form role="form" method="post" autocomplete="off" action="/member/login">
-	<h1>헬스 게시판 👊</h1>
+<form role="form" method="post" autocomplete="off" action="/member/login" name="io">
+	<h1>헬스장 추천 게시판 👊</h1>
    <div class="input-box">
     <label for="userId" class="String"></label><br>
     <input type="text" id="userId" name="userId" class="login" placeholder="아이디" />
@@ -153,19 +172,21 @@
    
    
    <div>
-	   <button type="submit" id="button_login">로그인</button>    
+	   <button type="submit" id="button_login" onclick="checkForm()">로그인</button>    
 	   <button type="button" onclick="location.href='/member/register'; return false;" id="button_login">회원가입</button>
    </div>
-  
+	<div class="error">
+		<c:if test="${msg == false}">
+			<p>아이디 및 비밀번호가 틀렸습니다.</p>
+				<script>
+					document.io.userId.focus();
+				</script>
+		</c:if>
+  	</div>
 </form>
 </c:if>
 
-<c:if test="${msg == false}">
-	<script>
-   		alert("로그인에 실패하였습니다. 아이디, 비밀번호를 확인해주세요");
-   	</script>
-</c:if>
-
+ 
 <c:if test="${member != null }">
 	<script>
 		alert("${member.userName}님 환영합니다.");

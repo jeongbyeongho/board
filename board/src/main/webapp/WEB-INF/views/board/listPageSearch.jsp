@@ -10,6 +10,11 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+	<script>
+ 	// url 파라미터 지우는 코드
+  		history.replaceState({}, null, location.pathname);	 
+	</script>
+ 
 	<style>
 		.input-group{
 			display:flex;
@@ -24,10 +29,13 @@
 	</style>
 </head>
 <body>
+<% String Referer=request.getHeader("Referer");  %>
+
 <div class="logo">
 	<img src="/resources/images/image/neotek_img.png" width="10%" >
 	<h2> 헬스장 추천 게시판</h2>
 </div>
+
 
 
 <div id="nav" class="contatiner">

@@ -64,25 +64,79 @@
 	}
 	
 </style> 
+	<script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
 </head>
 <body>
 <script>
 	//document.querySelector('input[name="genDer"]:checked').value;
 	function checkForm(){
 		var frm=document.getElementById('send');
+		
 		if(document.io.userId.value ==""){
-			alert("아이디를 입력하세요");
+			alert("아이디를 입력해주세요.");
+			document.io.userId.focus();
+			return false;
+		}else if(document.io.userId.value.length>10){
+			alert("아이디는 10자 이상 쓸 수 없습니다.");
+			document.io.userId.focus();
+			return false;
+		}else if(document.io.userId.value.length<6){
+			alert("아이디는 6글자 이상 작성해주세요");
+			document.io.userId.focus();
 			return false;
 		}
-		if(document.io.userName.value == ""){
-			alert("닉네임을 입력해주세요");
-			return false;
-		}
+		
 		if(document.io.userPwd.value ==""){
 			alert("비밀번호를 입력해주세요");
+			document.io.userPwd.focus();
+			return false;
+		}else if(document.io.userPwd.value.length>20){
+			alert("비밀번호는 20자 이상 쓸 수 없습니다.");
+			document.io.userPwd.focus();
+			return false;
+		}else if(document.io.userPwd.value.length<6){
+			alert("비밀번호는 6글자 이상 작성해주세요");
+			document.io.userPwd.focus();
+			return false;
+		}
+		
+		if(document.io.userName.value ==""){
+			alert("닉네임를 입력해주세요");
+			document.io.userName.focus();
+			return false;
+		}else if(document.io.userName.value.length>8){
+			alert("닉네임은 8자 이상 쓸 수 없습니다.");
+			document.io.userName.focus();
+			return false;
+		}else if(document.io.userName.value.length<2){
+			alert("닉네임은 두 글자 이상 작성해주세요");
+			document.io.userName.focus();
 			return false;
 		}
 	}
+	
+	
+	$(".idCheck").click(function(){
+	   
+	   var query = {userId : $("#userId").val()};
+	   
+	   $.ajax({
+	    url : "/member/idCheck",
+	    type : "post",
+	    data : query,
+	    success : function(data) {
+	    
+	     if(data == 1) {
+	      $(".result .msg").text("사용 불가");
+	      $(".result .msg").attr("style", "color:#f00");      
+	     } else {
+	      $(".result .msg").text("사용 가능");
+	      $(".result .msg").attr("style", "color:#00f");
+	     }
+	    }
+	   });  // ajax 끝
+	});
+	
 </script>
 
 <div>
@@ -91,6 +145,13 @@
 	
  		<label for="userId">아이디</label>
   		<input type="text" class="login" id="userId" name="userId" placeholder="아이디"/>
+  		<p>
+  			<button type="button" class="idCheck">아이디 중복 확인</button>
+  		</p>
+  		<p class="result">
+  			<span class="msg">아이디를 확인해주세요.</span>
+  		</p>
+  		
 
  <p>
   <label for="userPass">비밀번호</label>

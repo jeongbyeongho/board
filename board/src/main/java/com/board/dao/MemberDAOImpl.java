@@ -31,4 +31,9 @@ public class MemberDAOImpl implements MemberDAO{
 		return sql.selectOne(namespace + ".login", vo);
 	}
 	
+	@Override
+	public MemberVO idCheck(String userId) throws Exception{
+		return sql.selectOne(namespace +".idCheck",userId);
+		
+	}
 }

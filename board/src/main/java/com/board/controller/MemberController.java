@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.board.domain.MemberVO;
@@ -47,8 +48,10 @@ import com.board.service.MemberService;
 		MemberVO login = service.login(vo);
 		if(login==null) {
 			session.setAttribute("member", null);
+			session.setAttribute("err", "로그인 정보가 올바르지 않아요.");
 			rttr.addFlashAttribute("msg", false);
 			// msg라는 정보에 false라는 값이 들어가서 전송됨. 일회용 값
+			
 		}else {
 			session.setAttribute("member", login);
 		}
@@ -70,5 +73,20 @@ import com.board.service.MemberService;
 		Logger.info("post logout");
 		service.login(vo);
 		return "redirect:/member/login";
+	}
+	
+	// id 체크
+	@ResponseBody
+	@RequestMapping(value="/idCheck",method=RequestMethod.POST)
+	public int postIdCheck(HttpServletRequest req) throws Exception{
+		Logger.info("post idCheck");
+		String userId = req.getParameter("userId");
+		MemberVO idCheck = service.idCheck(userId);
+		
+		int result = 0;
+		if(idCheck!=null) {
+			result=1;
+		}
+		return result;
 	}
 }
