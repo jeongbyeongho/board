@@ -47,7 +47,7 @@
 		font-size:30px;
 	}
 	
-	#button_login{
+	.button_login{
 		margin : 10px auto;
 		font-weight:bold;
 		color : #eeeff1;
@@ -58,6 +58,9 @@
 		border: none;
 		border-radius : 5px;
 		background-color: #1bbc9b;
+	}
+	.button_login:hover{
+		background-color:#1bb8bc;
 	}
 	.login{
 		width:100%;
@@ -172,8 +175,8 @@
    
    
    <div>
-	   <button type="submit" id="button_login" onclick="checkForm()">로그인</button>    
-	   <button type="button" onclick="location.href='/member/register'; return false;" id="button_login">회원가입</button>
+	   <button type="submit" class="button_login" onclick="checkForm()">로그인</button>    
+	   <button type="button" onclick="location.href='/member/register'; return false;" class="button_login">회원가입</button>
    </div>
 	<div class="error">
 		<c:if test="${msg == false}">
@@ -191,6 +194,7 @@
 	<script>
 		alert("${member.userName}님 환영합니다.");
 		location.href="/board/listPageSearch?num=1";
+		
 	</script>
 </c:if>
 </body>

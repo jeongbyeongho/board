@@ -102,5 +102,22 @@
 		where num = #{num}
 	</update> 
 
+	<select id="searchCount" parameterType="hashMap" resultType="int">
+<!-- searchType과 keyword를 받아야 하므로 파라미터 타입 추가함 -->
+	select count(num) from tbl_board
+	<if test='searchType.equals("title")'>
+		where title LIKE concat('%',#{keyword},'%')
+	</if>
+	<if test='searchType.equals("content")'>
+		where content LIKE concat('%',#{keyword},'%')
+	</if>
+	<if test='searchType.equals("title_content")'>
+		where title LIKE concat('%',#{keyword},'%')
+				or content LIKE concat('%',#{keyword},'%')
+	</if>
+	<if test='searchType.equals("writer")'>
+		where writer LIKE concat('%',#{keyword},'%')
+	</if>	
+</select>
 </mapper>
 

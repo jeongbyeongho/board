@@ -1,11 +1,17 @@
 package com.board.controller;
 
 
+import java.io.PrintWriter;
 import java.util.List;
+
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 // import com.board.dao.BoardDAO;
 import com.board.domain.BoardVO;
 import com.board.domain.Page;
+import com.board.domain.ReplyVO;
 import com.board.service.BoardService;
+import com.board.service.ReplyService;
 
 @Controller
 @RequestMapping("/board/*")
@@ -22,11 +30,21 @@ public class BoardController {
 	@Inject
 	private BoardService service;
 	
+	@Inject
+	private ReplyService replyService;
 	
 	// 게시물 목록
+	@GetMapping("/getInfo")
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	// get방식으로 왔을 때만 로직 수행
-	 public void getList(Model model) throws Exception {  
+	 public void getList(Model model,HttpServletRequest request,HttpServletResponse response) throws Exception {  
+		PrintWriter out = response.getWriter();
+		String referer = request.getHeader("referer");
+		if(referer == null) {
+			out.println("<script>location.href='/listPageSerach?=num1'</script>");
+		}
+
+		
 		List<BoardVO> list = null;
 		list = service.list();
 		model.addAttribute("list", list);
@@ -58,6 +76,10 @@ public class BoardController {
 	public void getView(@RequestParam("num") int num, Model model) throws Exception{
 		BoardVO vo = service.view(num);
 		model.addAttribute("view", vo);
+		
+		List<ReplyVO> reply = null;
+		reply = replyService.list(num);
+		model.addAttribute("reply",reply);
 	}
 	// 게시물 수정
 	@RequestMapping(value="/modify", method = RequestMethod.GET)
@@ -80,45 +102,42 @@ public class BoardController {
 		
 		return "redirect:/board/listPageSearch?num=1";
 	}
-	
 	// 게시물 목록 + 페이징
+		
 		@RequestMapping(value = "/listPage", method = RequestMethod.GET)
 		// get방식으로 왔을 때만 로직 수행
-		 public void getListPage(Model model, @RequestParam("num")int num) throws Exception {
+		 public void getListPage(Model model, @RequestParam("num")int num, @RequestParam("searchType")String searchType,
+				 @RequestParam("keyword")String keyword) throws Exception {
 			
 			Page page = new Page();
 			// page형의 page변수를 생성함
 			page.setNum(num);
 			page.setCount(service.count());
 			
+			
 			List<BoardVO> list = null;
 			list = service.listPage(page.getDisplayPost(), page.getPostNum());
 			
 			model.addAttribute("list",list);
-//			model.addAttribute("pageNum", page.getStartPageNum());
-//			
-//			model.addAttribute("startPageNum", page.getStartPageNum());
-//			model.addAttribute("endPagenum", page.getEndPageNum());
-//			
-//			model.addAttribute("prev",page.getPrev());
-//			model.addAttribute("next",page.getNext());
-			
 			model.addAttribute("page",page);
-			// page의 데이터 전부를 view로 전달함
 			model.addAttribute("select", num);
 		}
 			
-		
+			
 			@RequestMapping(value="/listPageSearch", method = RequestMethod.GET)
 			public void getListPageSearch(Model model, @RequestParam("num")int num,
 					@RequestParam(value="searchType",required=false, defaultValue="title") String searchType,
 					@RequestParam(value="keyword",required=false, defaultValue="") String keyword) throws Exception{
 				
+				
 				Page page = new Page();
 				// Page형의 page변수 생성
-			
 				page.setNum(num);
-				page.setCount(service.count());
+				//page.setCount(service.count());
+				page.setCount(service.searchCount(searchType,keyword));
+				//page.setSearchTypeKeyword(searchType, keyword);
+				page.setSearchType(searchType);
+				page.setKeyword(keyword);
 				
 				List<BoardVO> list = null;
 				list= service.listPageSearch(page.getDisplayPost(), page.getPostNum(), searchType, keyword);
@@ -127,6 +146,11 @@ public class BoardController {
 				// key, value를 쌍으로 하여 전달
 				model.addAttribute("page",page);
 				model.addAttribute("select",num);
+				
+//				model.addAttribute("searchType",searchType);
+//				model.addAttribute("keyword",keyword);
+				
+				
 				
 			}
 			

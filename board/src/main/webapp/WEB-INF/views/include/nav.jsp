@@ -28,7 +28,9 @@
 	<li>
 		<a class="userName">${member.userName}님</a>
 	</li>
-	
+	<li>
+		<a href="/member/change">회원 정보 수정</a>
+	</li>
 	<c:if test="${member != null }">
 		<li>
 			<button class="btn btn-light" type="button" onclick="location.href='../member/logout'; alert('${member.userName}님 로그아웃 되었습니다.');">로그아웃</button>

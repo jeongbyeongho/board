@@ -21,4 +21,11 @@
 		from myMember
 		where userId = #{userId}
 	</select>
+	
+	<update id="change">
+		update myMember
+			set
+				userPwd = #{userPwd}
+			where userName = #{userName}
+	</update>
 </mapper>

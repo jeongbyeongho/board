@@ -89,4 +89,17 @@ import com.board.service.MemberService;
 		}
 		return result;
 	}
+	
+	@RequestMapping(value="/change",method=RequestMethod.GET)
+	public void getChange() throws Exception{
+		Logger.info("get change");
+		
+	}
+	@RequestMapping(value="/change",method=RequestMethod.POST)
+	public String postChange(HttpSession session,MemberVO vo) throws Exception{
+		Logger.info("post change");
+		service.change(vo);
+		session.invalidate();
+		return "redirect:/";
+	}
 }

@@ -22,14 +22,14 @@
 	</style>
 <script>
 	//history.replaceState({}, null, location.pathname);
-	String referer = request.getHeader("referer");
-	if(referer==null){
-		alert("다시 접근");
-		document.location.href="/";
-	}
+	//history.pushState({},null,location.pathname);
 </script>
 <script>
+if("${views.writer}" != "${member.userName}"){
+	alert("정상적인 루트로 이동해주세요.");
+	location.href="/board/listPageSearch?num=1";
 	
+}
 	function checkForm(){
 		if(document.io.title.value == "") {
         	alert("제목을 입력하세요");
@@ -54,13 +54,16 @@
 			 alert("작성 허용 범위를 초과했습니다.");
 			 return false;
 		 }
-		document.io.submit();
+			 document.io.submit();
+		 
+		 
+		//location.href='/board/view?num=${views.num}';
 	}
+
 		
 </script>
 </head>
 <body>
-
 <div id="nav" class="container">
 	<%@ include file="../include/nav.jsp"%>
 </div>
@@ -69,7 +72,6 @@
 	<div data-role="header" class="container">
     	<h1>헬스장 추천 게시판</h1><br>
   	</div>
-	
 	<div id="nav" class="container">  
 		<!-- input,text 입력 엘리먼트의 속성 값은 BoardVO와 동일해야 함 -->
 		<div class="row">
@@ -94,8 +96,6 @@
 			<button type="button" class="btn btn-info" onclick="checkForm()">완료</button>
 		</div>
 	</div>
-	
-
 </form>
 
 </body>

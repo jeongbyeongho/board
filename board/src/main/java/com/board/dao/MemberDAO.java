@@ -9,4 +9,5 @@ public interface MemberDAO {
 	
 	public MemberVO idCheck(String userId) throws Exception;
 	
+	public void change(MemberVO vo)throws Exception;
 }

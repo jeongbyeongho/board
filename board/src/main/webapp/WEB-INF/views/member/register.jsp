@@ -48,6 +48,9 @@
 		background-color: #1bbc9b;
 		text-decoration-line:none;
 	}
+	#submit:hover{
+		background:#1bb8bc;
+	}
 	.login{
 		width:100%;
 		border-radius:5px;
@@ -58,9 +61,17 @@
 	label{
 		float:left;
 	}
-	.gender{
-		
+
+	.idCheck{
+		border:none;
 		border-radius:5px;
+		width:50%;
+		height:35px;
+		background-color:#1bbc9b;
+		color:#eeeff1;
+	}
+	.idCheck:hover{
+		background-color:#1bb8bc;
 	}
 	
 </style> 
@@ -115,27 +126,7 @@
 		}
 	}
 	
-	
-	$(".idCheck").click(function(){
-	   
-	   var query = {userId : $("#userId").val()};
-	   
-	   $.ajax({
-	    url : "/member/idCheck",
-	    type : "post",
-	    data : query,
-	    success : function(data) {
-	    
-	     if(data == 1) {
-	      $(".result .msg").text("사용 불가");
-	      $(".result .msg").attr("style", "color:#f00");      
-	     } else {
-	      $(".result .msg").text("사용 가능");
-	      $(".result .msg").attr("style", "color:#00f");
-	     }
-	    }
-	   });  // ajax 끝
-	});
+
 	
 </script>
 
@@ -161,10 +152,42 @@
   <label for="userName">닉네임</label>
   <input type="text"  class="login" id="userName" name="userName" placeholder="닉네임"/>
  </p>
- 
+
+<script>
+
+$(".idCheck").click(function(){
+   
+   var query = {userId : $("#userId").val()};
+   
+   $.ajax({
+    url : "/member/idCheck",
+    type : "post",
+    data : query,
+    success : function(data) {
+    
+     if(data == 1) {
+      $(".result .msg").text("사용 불가");
+      $(".result .msg").attr("style", "color:#f00");      
+      $("#submit").attr("disabled","disabled");
+     } else {
+      $(".result .msg").text("사용 가능");
+      $(".result .msg").attr("style", "color:#00f");
+      $("#submit").removeAttr("disabled");
+     }
+    }
+   });  // ajax 끝
+});
+
+
+$("#userId").keyup(function(){
+	$(".result .msg").text("사용 불가");
+	$(".result .msg").attr("style","color:#000");
+	$("#submit").attr("disabled","disabled");
+})
+</script> 
 	
  
-   <button type="submit" id="submit" onclick="return checkForm()">회원가입</button>
+   <button type="submit" id="submit" onclick="return checkForm()" disabled="disabled">회원가입</button>
        
  
  

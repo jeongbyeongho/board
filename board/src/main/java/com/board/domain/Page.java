@@ -87,5 +87,40 @@ public class Page {
 		
 	}
 	
+	/*
+	private String searchTypeKeyword;
+	// 검색조건(searchType)과 검색어(keyword)가 공란("")이 아니라면, url 뒤에 들어갈 &searchType=[검색조건]&keyword=[검색어] 문자열을 만듦
+	public void setSearchTypeKeyword(String searchType, String keyword) {
+		if(searchType.equals("")||keyword.equals("")) {
+			searchTypeKeyword="";
+		} else {
+			searchTypeKeyword = "&searchType=" + searchType +"&keyword=" + keyword;
+		}
+	}
+	*/
+	public String getSearchTypeKeyword() {
+		if(searchType.equals("") || keyword.equals("")) {
+			return "";
+		}else {
+			return "&searchType=" + searchType + "&keyword="+ keyword;
+		}
+	}
+	
+	private String searchType;
+	private String keyword;
+
+	public String getSearchType() {
+		return searchType;
+	}
+	public void setSearchType(String searchType) {
+		this.searchType = searchType;
+	}
+	public String getKeyword() {
+		return keyword;
+	}
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+	
 	
 }

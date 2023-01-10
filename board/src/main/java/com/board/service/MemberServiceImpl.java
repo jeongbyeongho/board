@@ -26,4 +26,8 @@ public class MemberServiceImpl implements MemberService{
 	public MemberVO idCheck(String userId)throws Exception{
 		return dao.idCheck(userId);
 	}
+	@Override
+	public void change(MemberVO vo) throws Exception{
+		dao.change(vo);
+	}
 }
