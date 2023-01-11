@@ -30,4 +30,8 @@ public class ReplyServiceImpl implements ReplyService {
 	public void delete(ReplyVO vo)throws Exception{
 		dao.delete(vo);
 	}
+	@Override
+	public ReplyVO replySelect(ReplyVO vo)throws Exception{
+		return dao.replySelect(vo);
+	}
 }

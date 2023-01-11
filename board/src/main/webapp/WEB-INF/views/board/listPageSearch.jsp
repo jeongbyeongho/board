@@ -69,7 +69,8 @@
 			  </td>
 			  <td>${list.writer}</td>
 			  <td>${list.views}</td>
-			  <td>${list.regDate}</td>
+			  
+			<td><fmt:formatDate value="${list.regDate}" pattern="(a)hh:mm:ss"/></td>
 		 </tr>
 		</c:forEach>
 	</tbody>	

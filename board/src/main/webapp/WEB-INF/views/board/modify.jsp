@@ -54,10 +54,7 @@ if("${views.writer}" != "${member.userName}"){
 			 alert("작성 허용 범위를 초과했습니다.");
 			 return false;
 		 }
-			 document.io.submit();
-		 
-		 
-		//location.href='/board/view?num=${views.num}';
+		document.io.submit();
 	}
 
 		

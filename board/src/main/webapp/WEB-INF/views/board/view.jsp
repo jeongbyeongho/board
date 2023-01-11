@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시물 조회</title>
+<title>${view.title}</title>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
@@ -21,6 +21,12 @@
 		.modify-button{
 			margin-left:-7px;
 		}
+		ul{
+			list-style:none;
+			
+			padding:0px;
+		}
+		
 	</style>
 	<script>
 		function deleteAlert(){
@@ -37,6 +43,28 @@
 				location.href='/board/modify?num=${view.num}';
 			}
 		}
+		
+		function RdeleteAlert(){
+			if(!confirm("삭제 하시겠습니까?")){
+				return false;
+			}else{
+				location.href='/reply/delete?num=${view.num}';
+			}
+		}
+		function formCheck(){
+			if(document.frm.content.value == ""){
+				alert("내용을 입력해주세요.");
+				return false;
+			}else if(document.frm.content.value.length<3){
+				alert("내용이 너무 짧아요.");
+				return false;
+			}else if(document.frm.content.value.length>201){
+				alert("내용이 너무 길어요.");
+				return false;
+			}
+			 document.frm.submit();
+		}
+		
 		history.replaceState({}, null, location.pathname);
 	</script>
 </head>
@@ -57,9 +85,9 @@
 		<!-- input,text 입력 엘리먼트의 속성 값은 BoardVO와 동일해야 함 -->
 		<div class="row">
 			<div class="mb-3">
-			<label for="exampleFormControlInput1" class="form-label">제목</label>
-			<input type="text" class="form-control" name="title" id="exampleFormControlInput1" value="${view.title}" readonly>	
-		</div>	
+				<label for="exampleFormControlInput1" class="form-label">제목</label>
+				<input type="text" class="form-control" name="title" id="exampleFormControlInput1" value="${view.title}" readonly>	
+			</div>	
 			<div class="mb-3">
 				<label for="exampleFormControlTextarea1" class="form-label">내용</label>
 				<textarea class="form-control" id="exampleFormControlTextarea1" name="content" cols="50" rows="12" readonly>${view.content}</textarea>
@@ -81,52 +109,53 @@
 			</div>
 		</c:if>
 	</div>
-	
-	
-	<!--  댓글 기능 추가  -->
-	
-	<br>
-<ul>
-	<!-- <li>
-		<div>
-			<p>첫번째 댓글 작성자</p>
-			<p>첫번째 댓글</p>
-		</div>		
-	</li>
-	<li>
-		<div>
-			<p>두번째 댓글 작성자</p>
-			<p>두번째 댓글</p>
-		</div>		
-	</li>
-	<li>
-		<div>
-			<p>세번째 댓글 작성자</p>
-			<p>세번째 댓글</p>
-		</div>		
-	</li>  -->
-	
-	<c:forEach items="${reply}" var="reply">
-	<li>
-		<div>
-			<p>${reply.writer} / <fmt:formatDate value="${reply.regDate}" pattern="yyyy-MM-dd"/></p>
-			<p>${reply.content}</p>				
-		</div>
-	</li>
-	</c:forEach>
-</ul>
-
-<div>
-	<label>댓글 작성자</label>
-	<p><input type="text"></p>
-	<p><textarea rows="5" cols="50"></textarea></p>
-	<p><button type="button">댓글 작성</button></p>
-</div>
-
-
-
-
 </form>
+<br>
+<div id="nav" class="container">
+	<ul>
+		<c:forEach items="${reply}" var="reply">
+			<li>
+				<p><b>${reply.writer}</b> / <fmt:formatDate value="${reply.regDate}" pattern="yyyy-MM-dd"/></p>
+				<p>${reply.content}</p>
+				
+				<c:if test="${member.userName == reply.writer}">
+					<a href="/reply/modify?num=${view.num}&rnum=${reply.rnum}" onclick="return confirm('수정하시겠어요?');">수정</a> / <a href="/reply/delete?num=${view.num}&rnum=${reply.rnum}" onclick="return confirm('삭제하시겠어요?');">삭제</a>
+				</c:if> 
+				<hr>
+								
+			</li>
+	 
+		</c:forEach>
+	</ul>
+</div>
+<div>
+	<form method="post" name="frm" action="/reply/write">
+		<div id="nav" class="container">
+			
+				<label>작성자</label>
+				<div class="row">
+					<div class="col">
+						<input type="text" class="form-control" name="writer" aria-label="First name" value="${member.userName}" readonly>
+					</div> 
+					<div class="col">
+					</div>
+					
+					<div class="mb-3">
+						<label for="exampleFormControlTextarea1" class="form-label"></label>
+						<textarea rows="5" cols="50" name="content" class="form-control" placeholder="내용" maxlength="200"></textarea>
+					</div>
+					<div class="col"></div>
+					
+				
+					<div class="mb-3">
+						<input type="hidden" name="num" value="${view.num}">
+						<button type="button" name="replyContent" class="btn btn-info" onclick="formCheck()">댓글 작성</button>
+					</div>
+				</div>
+	
+		</div>
+	</form>
+</div>
 	
 </body>
 </html>

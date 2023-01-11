@@ -31,7 +31,15 @@
 		where rnum = #{rnum} and num = #{num}
 	
 	</delete>
-
+	
+	<select id="replySelect" resultType="com.board.domain.ReplyVO" parameterType="com.board.domain.ReplyVO">
+		select
+			rnum, num, writer, content, regDate
+		from tbl_reply
+			where num = #{num} and rnum = #{rnum}
+	</select>
+	
+	
 
 
 </mapper>

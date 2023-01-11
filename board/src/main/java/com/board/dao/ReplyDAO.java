@@ -15,5 +15,6 @@ public interface ReplyDAO {
 	public void modify(ReplyVO vo) throws Exception;
 	// 댓글 삭제
 	public void delete(ReplyVO vo)throws Exception;
-	
+	//단일 댓글 조회
+	public ReplyVO replySelect(ReplyVO vo) throws Exception;
 }
