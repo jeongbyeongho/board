@@ -92,7 +92,7 @@
 			document.io.userId.focus();
 			return false;
 		}else if(document.io.userId.value.length<6){
-			alert("아이디는 6글자 이상 작성해주세요");
+			alert("아이디는 6자 이상 작성해주세요");
 			document.io.userId.focus();
 			return false;
 		}
@@ -106,7 +106,7 @@
 			document.io.userPwd.focus();
 			return false;
 		}else if(document.io.userPwd.value.length<6){
-			alert("비밀번호는 6글자 이상 작성해주세요");
+			alert("비밀번호는 6자 이상 작성해주세요");
 			document.io.userPwd.focus();
 			return false;
 		}
@@ -120,7 +120,7 @@
 			document.io.userName.focus();
 			return false;
 		}else if(document.io.userName.value.length<2){
-			alert("닉네임은 두 글자 이상 작성해주세요");
+			alert("닉네임은 2자 이상 작성해주세요");
 			document.io.userName.focus();
 			return false;
 		}
@@ -167,11 +167,11 @@ $(".idCheck").click(function(){
     
      if(data == 1) {
       $(".result .msg").text("사용 불가");
-      $(".result .msg").attr("style", "color:#f00");      
+      $(".result .msg").attr("style", "color:red","font-weight:bold");      
       $("#submit").attr("disabled","disabled");
      } else {
       $(".result .msg").text("사용 가능");
-      $(".result .msg").attr("style", "color:#00f");
+      $(".result .msg").attr("style", "color:#00f","font-weight:bold");
       $("#submit").removeAttr("disabled");
      }
     }
@@ -181,7 +181,7 @@ $(".idCheck").click(function(){
 
 $("#userId").keyup(function(){
 	$(".result .msg").text("사용 불가");
-	$(".result .msg").attr("style","color:#000");
+	$(".result .msg").attr("style","color:red");
 	$("#submit").attr("disabled","disabled");
 })
 </script> 

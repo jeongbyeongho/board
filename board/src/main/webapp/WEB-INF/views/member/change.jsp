@@ -140,15 +140,24 @@ function checkForm(){
 		document.io.userName.focus();
 		return false;
 	}else if(document.io.userName.value.length>10){
-		alert("닉네임은 8자 이상 쓸 수 없습니다.");
+		alert("닉네임은 8글자 이상 쓸 수 없습니다.");
 		return false;
 	}else if(document.io.userName.value.length<2){
-		alert("닉네임은 두 글자 이상 작성해주세요.");
+		alert("닉네임은 8글자 이상 작성해주세요.");
 		document.io.userName.focus();
 		return false;
 	}
+	
+	
+	if(document.io.Pwd.value ==""){
+		alert("기존 비밀번호를 입력해주세요");
+		document.io.Pwd.focus();
+		return false;
+	}
+	
+	
 	if(document.io.userPwd.value ==""){
-		alert("비밀번호를 입력해주세요");
+		alert("변경할 비밀번호를 입력해주세요");
 		document.io.userPwd.focus();
 		return false;
 	}else if(document.io.userPwd.value.length>20){
@@ -156,7 +165,7 @@ function checkForm(){
 		document.io.userPwd.focus();
 		return false;
 	}else if(document.io.userPwd.value.length<6){
-		alert("비밀번호는 6글자 이상 작성해주세요");
+		alert("비밀번호는 6자 이상 작성해주세요");
 		document.io.userPwd.focus();
 		return false;
 	}else if(document.io.userPwd.value == Pwd.value){

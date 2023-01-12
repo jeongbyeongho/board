@@ -25,7 +25,7 @@
 	<update id="change">
 		update myMember
 			set
-				userPwd = #{userPwd}
+				userPwd = #{userPwd}, userName=#{userName}
 			where userName = #{userName}
 	</update>
 </mapper>

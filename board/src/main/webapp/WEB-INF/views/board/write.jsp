@@ -19,11 +19,11 @@
              alert("제목을 입력하세요");
              return;
          }else if(document.io.title.value.length<5){
-        	 alert("제목이 너무 짧습니다.");
+        	 alert("제목이 너무 짧습니다.\n5자 이상 작성해주세요.");
         	 document.io.title.focus();
         	 return false;
          }else if(document.io.title.value.length>30){
-         	 alert("제목이 너무 길어요");
+         	 alert("제목이 너무 길어요\n30자 이하 작성해주세요.");
          	 document.io.title.focus();
          	 return false;
          }
@@ -32,13 +32,18 @@
              alert("내용을 입력하세요");
              return false;
          }else if(document.io.content.value.length<10){
-			 alert("내용이 너무 짧습니다.");
+			 alert("내용을 10자 이상 작성해주세요.");
 			 return false;
 		 }else if(document.io.content.value.length>401){
-			 alert("작성 허용 범위를 초과했습니다.");
+			 alert("작성 허용 범위를 초과했습니다.\n400자 이하 작성해주세요.");
 			 return false;
 		 }
          document.io.submit();
+         
+       //  if("${member.userName}" != "${view.writer}")
+        //	 alert("정상적인 루트로 이동해주세요.");
+        	 //location.href="/board/listPageSearch?num=1";
+         //}
      }
 	 
 	
