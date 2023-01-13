@@ -23,10 +23,9 @@
 		}
 		ul{
 			list-style:none;
-			
 			padding:0px;
 		}
-		
+
 	</style>
 	<script>
 		function deleteAlert(){
@@ -70,17 +69,14 @@
 </head>
 <body>
 
-<div id="nav" class="container">
+<div id="nav">
 	<%@ include file="../include/nav.jsp"%>
 </div>
 
 
 <!-- input,text 입력 엘리먼트의 속성 값은 BoardVO와 동일해야 함 -->
 <form method="post">
-	<div data-role="header" class="container">
-    	<h1>헬스장 추천 게시판</h1><br>
-  	</div>
-	
+	<br>
 	<div id="nav" class="container">  
 		<!-- input,text 입력 엘리먼트의 속성 값은 BoardVO와 동일해야 함 -->
 		<div class="row">
@@ -115,7 +111,7 @@
 	<ul>
 		<c:forEach items="${reply}" var="reply">
 			<li>
-				<p><b>${reply.writer}</b> / <fmt:formatDate value="${reply.regDate}" pattern="yyyy-MM-dd"/></p>
+				<p><b>${reply.writer}</b> / <fmt:formatDate value="${reply.regDate}" pattern="yyyy-MM-dd"/> / <fmt:formatDate value="${reply.regDate}" type="time" timeStyle="medium"/> </p>
 				<p>${reply.content}</p>
 				
 				<c:if test="${member.userName == reply.writer}">
@@ -132,7 +128,7 @@
 	<form method="post" name="frm" action="/reply/write">
 		<div id="nav" class="container">
 			
-				<label>작성자</label>
+				<label>댓글 작성자</label>
 				<div class="row">
 					<div class="col">
 						<input type="text" class="form-control" name="writer" aria-label="First name" value="${member.userName}" readonly>

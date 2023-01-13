@@ -183,8 +183,15 @@ function checkForm(){
 	<form role="form" method="post" autocomplete="off" name="io">
 		<h1>회원 정보 변경 👊</h1>
 		<script>console.log(document.getElementById('${myMember.userPwd}'));</script>
+		
 	   <div class="input-box">
 	    <label for="userId" class="String"></label><br>
+	    <input type="text" id="userId" name="userId" class="login" value="${member.userId}" readonly />
+	   </div>
+	   
+	   
+	   <div class="input-box">
+	    <label for="userName" class="String"></label><br>
 	    <input type="text" id="userName" name="userName" class="login" value="${member.userName}" placeholder="변경할 닉네임" />
 	   </div>
 	   

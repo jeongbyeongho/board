@@ -150,8 +150,6 @@ public class BoardController {
 //				model.addAttribute("searchType",searchType);
 //				model.addAttribute("keyword",keyword);
 				
-				
-				
 			}
 			
 			

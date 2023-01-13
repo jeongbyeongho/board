@@ -6,7 +6,7 @@
 <head>
 	<meta charset="UTF-8">
 	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-	<title>게시물 목록</title>
+	<title>헬스장 추천 게시판</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
@@ -16,7 +16,6 @@
   		//history.pushState({},null,location.pathname);
   		
 	</script>
- 
 	<style>
 		.input-group{
 			display:flex;
@@ -26,25 +25,31 @@
 		.logo{
 			display:flex;
 			padding:10px 0px;
-			
 		}
+		#nav{
+			padding-top:0px;
+			justify-content:space-between;
+		}
+		
+		
 	</style>
 </head>
 <body>
 
 <c:if test="${member != null}">
-<div class="logo">
-	<img src="/resources/images/image/neotek_img.png" width="10%" >
-	<h2> 헬스장 추천 게시판</h2>
-</div>
 
 
-
+<div id="color">
 <div id="nav" class="contatiner">
 	<%@ include file="../include/nav.jsp"%>
 </div>
+</div>
+
+
 <form role="form" method="POST">
-<table class="table table-hover">
+
+<div class="container">
+<table class="table table-striped">
 	<thead>
 		<tr>
 			<th>번호</th>
@@ -70,12 +75,14 @@
 			  <td>${list.writer}</td>
 			  <td>${list.views}</td>
 			  
-			<td><fmt:formatDate value="${list.regDate}" pattern="(a)hh:mm:ss"/></td>
+			<td><fmt:formatDate value="${list.regDate}" type="time" timeStyle="medium"/></td>
 		 </tr>
 		</c:forEach>
 	</tbody>	
 </table>
+</div>
 </form>
+<div class="container">
 <nav aria-label="Page navigation example">
   <ul class="pagination">
     <c:if test="${page.prev}">
@@ -94,6 +101,7 @@
 	</c:if>
   </ul>
 </nav>
+</div>
 </c:if>
 <c:if test="${member == null}">
 	<script>
@@ -101,7 +109,8 @@
 		location.href="/";
 	</script>
 </c:if>
-<div class="search row">
+<div class="container">
+	<div class="search row">
 		<div class="col-xs-2 col-sm-2">
 			<select name="searchType" class="form-control">
 				<option value="title" <c:if test="${page.searchType eq 'title'}">selected</c:if>>제목</option>
@@ -118,6 +127,7 @@
 			</div>		
 		</div>
 	</div>
+</div>
 	<script>
 	document.getElementById("searchBtn").onclick = function(){
 		let searchType = document.getElementsByName("searchType")[0].value;

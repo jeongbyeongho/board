@@ -26,6 +26,6 @@
 		update myMember
 			set
 				userPwd = #{userPwd}, userName=#{userName}
-			where userName = #{userName}
+			where userId = #{userId}
 	</update>
 </mapper>

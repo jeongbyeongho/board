@@ -41,6 +41,9 @@
 		padding: 15px;
 		margin: 0 auto;
 		background-color:#D8D8D8;
+		top:50%;
+		left:50%;
+		transform:trasnlate(-50%,-50%)
 	}
 	h1{
 		text-align:center;
