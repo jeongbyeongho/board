@@ -9,32 +9,27 @@
 	}
 	body{
 		background: grey;
-		display: flex;
-		justify-content : center;
-		align-items:center;
-		flex-direction: column;
-		
+	}
+	#box{
+		width:100%;
+		height:100%;
+		position:relative;
 	}
 	form{
 		width:350px;
 		border: NONE;
 		border-radius:10px;
 		padding: 15px;
-		margin: 0 auto;
-		background-color:#D8D8D8;
-	}
-	div{
 		text-align:center;
-		width:350px;
-		height:100px;
 		
+		background-color:#D8D8D8;
+		position: absolute;
+		top:50%;
+		left:50%;
+		transform: translate(-50%,-50%);
 	}
-	.input-box{
-		
-		padding:3px 4px;
-		width:100%
-		
-	}
+	
+
 	#submit{
 		margin : 10px auto;
 		font-weight:bold;
@@ -82,7 +77,15 @@
 	//document.querySelector('input[name="genDer"]:checked').value;
 	function checkForm(){
 		var frm=document.getElementById('send');
-		
+		 var reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
+			 
+		if(reg.test(document.io.userId.value)){
+			alert("특수문자를 입력할 수 없습니다.");
+			document.io.userId.value="";
+			document.io.userId.focus();
+			return false;
+		}
+		 
 		if(document.io.userId.value ==""){
 			alert("아이디를 입력해주세요.");
 			document.io.userId.focus();
@@ -111,6 +114,38 @@
 			return false;
 		}
 		
+		
+		if(document.io.Pwd.value ==""){
+			alert("비밀번호를 재입력해주세요");
+			document.io.Pwd.focus();
+			return false;
+		}else if(document.io.Pwd.value != document.io.userPwd.value){
+			alert("비밀번호가 같지 않습니다.");
+			document.io.Pwd.value="";
+			return false;
+		}
+		
+		
+		if(document.io.Pwd.value ==""){
+			alert("비밀번호를 입력해주세요");
+			document.io.Pwd.focus();
+			return false;
+		}else if(document.io.Pwd.value.length>20){
+			alert("비밀번호는 20자 이상 쓸 수 없습니다.");
+			document.io.userPwd.focus();
+			return false;
+		}else if(document.io.Pwd.value.length<6){
+			alert("비밀번호는 6자 이상 작성해주세요");
+			document.io.userPwd.focus();
+			return false;
+		}
+		
+		if(reg.test(document.io.userName.value)){
+			alert("특수문자를 입력할 수 없습니다.");
+			document.io.userName.value="";
+			document.io.userName.focus();
+			return false;
+		}
 		if(document.io.userName.value ==""){
 			alert("닉네임를 입력해주세요");
 			document.io.userName.focus();
@@ -124,18 +159,19 @@
 			document.io.userName.focus();
 			return false;
 		}
+		
 	}
 	
 
 	
 </script>
 
-<div>
-<form role="form" id="send" name="io" method="post" autocomplete="off" onsubmit="alert('회원가입을 축하합니다.')">
+<div id="box">
+<form role="form" name="io" method="post" autocomplete="off" onsubmit="alert('회원가입을 축하합니다.')">
 	<h1>회원가입</h1>
 	
  		<label for="userId">아이디</label>
-  		<input type="text" class="login" id="userId" name="userId" placeholder="아이디"/>
+  		<input type="text" class="login" id="userId" name="userId" placeholder="6자 이상 10자 이하"/>
   		<p>
   			<button type="button" class="idCheck">아이디 중복 확인</button>
   		</p>
@@ -146,8 +182,14 @@
 
  <p>
   <label for="userPass">비밀번호</label>
-  <input type="password" class="login"  id="userPwd" name="userPwd" placeholder="비밀번호"/>
+  <input type="password" class="login"  id="userPwd" name="userPwd" placeholder="6자 이상 20자 이하"/>
  </p>
+ <p>
+  <label for="userPass">비밀번호 재입력</label>
+  <input type="password" class="login"  id="Pwd" name="Pwd" placeholder="비밀번호 재입력"/>
+ </p>
+ 
+ 
  <p>
   <label for="userName">닉네임</label>
   <input type="text"  class="login" id="userName" name="userName" placeholder="닉네임"/>

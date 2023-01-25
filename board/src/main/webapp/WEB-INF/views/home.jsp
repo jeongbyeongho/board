@@ -7,9 +7,17 @@
 	<title>헬스장 추천 게시판</title>
 </head>
 <script>
+
+	var reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
 	function checkForm(){
 		if(document.io.userId.value ==""){
 			alert("아이디를 입력해주세요.");
+			return false;
+		}
+		if(reg.test(document.io.userId.value)){
+			alert("특수문자를 입력할 수 없습니다.");
+			document.io.userId.value="";
+			document.io.userId.focus();
 			return false;
 		}
 		if(document.io.userPwd.value ==""){
@@ -27,23 +35,24 @@
 	}
 	body{
 		background: grey;
-		display: flex;
-		justify-content : center;
-		align-items:center;
-		flex-direction: column;
-		
 	}
 	/* 로그인 */
+	#box{
+		width:100%;
+		height:100%;
+		position:relative;
+	}
 	form{
 		width:350px;
 		border: NONE;
 		border-radius:10px;
 		padding: 15px;
-		margin: 0 auto;
+		
 		background-color:#D8D8D8;
+		position:absolute;
 		top:50%;
 		left:50%;
-		transform:trasnlate(-50%,-50%)
+		transform:translate(-50%,-50%);
 	}
 	h1{
 		text-align:center;
@@ -162,8 +171,11 @@
 	}
 </style>
 <body>
-<hr>
+
 <c:if test="${member == null }">
+
+
+<div id="box">
 <form role="form" method="post" autocomplete="off" action="/member/login" name="io">
 	<h1>헬스장 추천 게시판 👊</h1>
    <div class="input-box">
@@ -190,12 +202,13 @@
 		</c:if>
   	</div>
 </form>
+</div>
 </c:if>
 
  
 <c:if test="${member != null }">
 	<script>
-		alert("${member.userName}님 환영합니다.");
+		//alert("${member.userName}님 환영합니다.");
 		location.href="/board/listPageSearch?num=1";
 		
 	</script>

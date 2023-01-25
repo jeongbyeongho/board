@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>닉네임 변경</title>
+<title>비밀번호 변경</title>
 
 <style>
 *{
@@ -20,8 +20,8 @@
 		border: NONE;
 		border-radius:10px;
 		padding: 15px;
-		
 		background-color:#D8D8D8;
+		
 		position:absolute;
 		top:50%;
 		left:50%;
@@ -138,26 +138,50 @@ function checkForm(){
 		alert("닉네임을 입력해주세요.");
 		document.io.userName.focus();
 		return false;
-	}else if(document.io.userName.value.length>8){
+	}else if(document.io.userName.value.length>10){
 		alert("닉네임은 8글자 이상 쓸 수 없습니다.");
 		return false;
 	}else if(document.io.userName.value.length<2){
-		alert("닉네임은 2글자 이상 작성해주세요.");
+		alert("닉네임은 8글자 이상 작성해주세요.");
 		document.io.userName.focus();
 		return false;
 	}
 	
 	
+	if(document.io.Pwd.value ==""){
+		alert("기존 비밀번호를 입력해주세요");
+		document.io.Pwd.focus();
+		return false;
+	}
+	
+	
+	if(document.io.userPwd.value ==""){
+		alert("변경할 비밀번호를 입력해주세요");
+		document.io.userPwd.focus();
+		return false;
+	}else if(document.io.userPwd.value.length>20){
+		alert("비밀번호는 20자 이상 쓸 수 없습니다.");
+		document.io.userPwd.focus();
+		return false;
+	}else if(document.io.userPwd.value.length<6){
+		alert("비밀번호는 6자 이상 작성해주세요");
+		document.io.userPwd.focus();
+		return false;
+	}else if(document.io.userPwd.value == Pwd.value){
+		alert("기존 비밀번호와 같습니다. 다른 비밀번호를 입력해주세요.");
+		return false;
+	}
 	else{
 		alert("변경 완료되었습니다.\n다시 로그인 해주세요.");
 	}
-	// console.log(document.getElementById('userPwd').value);
+	console.log(document.getElementById('userPwd').value);
 }
 </script>
 </head>
 <body>
 	<form role="form" method="post" autocomplete="off" name="io">
 		<h1>닉네임 변경 👊</h1>
+		<script>console.log(document.getElementById('${myMember.userPwd}'));</script>
 		
 	   <div class="input-box">
 	    <label for="userId" class="String"></label><br>
@@ -169,7 +193,17 @@ function checkForm(){
 	    <label for="userName" class="String"></label><br>
 	    <input type="text" id="userName" name="userName" class="login" value="${member.userName}" placeholder="변경할 닉네임" />
 	   </div>
-	   	   
+	   
+	   <div class="input-box">
+	    <label for="Pwd" class="String"></label><br>
+	    <input type="password" id="Pwd" name="Pwd" class="login" placeholder="기존 비밀번호"/>
+	   </div>
+	   
+	   <div class="input-box">
+	    <label for="userPwd" class="String"></label><br>
+	    <input type="password" id="userPwd" name="userPwd" class="login" placeholder="변경할 비밀번호"/>
+	   </div>
+	   
 	   <div>
 		   <button type="submit" class="button_login" onclick="return checkForm()">변경 완료</button>    
 		   <button type="button" class="button_login" onclick="location.href='/board/listPageSearch?num=1'">메인으로</button>

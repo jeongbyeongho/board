@@ -15,7 +15,7 @@
 
 	<script>
 	 function checkForm() {
-         if(document.io.title.value == "") {
+		 if(document.io.title.value == "") {
              alert("제목을 입력하세요");
              return;
          }else if(document.io.title.value.length<5){
