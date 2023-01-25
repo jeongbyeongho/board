@@ -105,7 +105,7 @@
 </c:if>
 <c:if test="${member == null}">
 	<script>
-		alert("로그인후 이용해주세요");
+		alert("로그인후 이용해주세요!");
 		location.href="/";
 	</script>
 </c:if>
