@@ -132,29 +132,44 @@
 	}
 	</style>
 	
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+	
 <script>
-function checkForm(){
-	if(document.io.userName.value == null){
-		alert("닉네임을 입력해주세요.");
-		document.io.userName.focus();
-		return false;
-	}else if(document.io.userName.value.length>10){
-		alert("닉네임은 8글자 이상 쓸 수 없습니다.");
-		return false;
-	}else if(document.io.userName.value.length<2){
-		alert("닉네임은 8글자 이상 작성해주세요.");
-		document.io.userName.focus();
+$("#submit").click(function(){
+	if($("#Pwd").val()==""){
+		alert("비밀번호를 입력해주세요.");
+		$("#Pwd").focus();
 		return false;
 	}
-	
+$.ajax({
+	url : "/member/checkPw",
+	type : "POST",
+	dateType : "json",
+	data : $("#updateForm").serializeArray(),
+	success: function(data){
+		
+		if(data==true){
+			if(confirm("회원수정하시겠습니까?")){
+				$("#updateForm").submit();
+			}
+			
+		}else{
+			alert("패스워드가 틀렸습니다.");
+			return;
+			
+		}
+	}
+})
+});
+function checkForm(){
 	
 	if(document.io.Pwd.value ==""){
-		alert("기존 비밀번호를 입력해주세요");
+		alert("비밀번호를 입력해주세요.");
 		document.io.Pwd.focus();
 		return false;
 	}
-	
-	
+	// 비밀번호 재확인 구현
+
 	if(document.io.userPwd.value ==""){
 		alert("변경할 비밀번호를 입력해주세요");
 		document.io.userPwd.focus();
@@ -170,8 +185,7 @@ function checkForm(){
 	}else if(document.io.userPwd.value == Pwd.value){
 		alert("기존 비밀번호와 같습니다. 다른 비밀번호를 입력해주세요.");
 		return false;
-	}
-	else{
+	}else{
 		alert("변경 완료되었습니다.\n다시 로그인 해주세요.");
 	}
 	console.log(document.getElementById('userPwd').value);
@@ -179,19 +193,12 @@ function checkForm(){
 </script>
 </head>
 <body>
-	<form role="form" method="post" autocomplete="off" name="io">
-		<h1>닉네임 변경 👊</h1>
-		<script>console.log(document.getElementById('${myMember.userPwd}'));</script>
+	<form role="form" id="updateForm" method="post" autocomplete="off" name="io" action="/member/pwdchange">
+		<h1>비밀번호 변경 👊</h1>
 		
 	   <div class="input-box">
 	    <label for="userId" class="String"></label><br>
 	    <input type="text" id="userId" name="userId" class="login" value="${member.userId}" readonly />
-	   </div>
-	   
-	   
-	   <div class="input-box">
-	    <label for="userName" class="String"></label><br>
-	    <input type="text" id="userName" name="userName" class="login" value="${member.userName}" placeholder="변경할 닉네임" />
 	   </div>
 	   
 	   <div class="input-box">
@@ -205,10 +212,16 @@ function checkForm(){
 	   </div>
 	   
 	   <div>
-		   <button type="submit" class="button_login" onclick="return checkForm()">변경 완료</button>    
+		       
 		   <button type="button" class="button_login" onclick="location.href='/board/listPageSearch?num=1'">메인으로</button>
+	   </div>
+	   <div>
+	   
 	   </div>
 	  
 	</form>
+	<button type="button" class="button_login" id="submit">변경 완료</button>
+	<!-- <button type="submit" class="button_login" id="submit" onclick="return checkForm()">변경 완료</button>  -->
+	
 </body>
 </html>

@@ -60,7 +60,7 @@
 
 <body>
 
-<div id="nav"class="contatiner">
+<div id="nav"class="container">
 	<%@ include file="../include/nav.jsp"%>
 </div>
 <section>

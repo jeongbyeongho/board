@@ -16,6 +16,12 @@
 		where userId = #{userId} and userPwd = #{userPwd};
 	</select>
 	
+	<select id="loginBcrypt" resultType="com.board.domain.MemberVO">
+		select userId,userName,userPwd
+		from myMember
+		where userId = #{userId}
+	</select>
+	
 	<select id="idCheck" resultType="com.board.domain.MemberVO">
 		select userId
 		from myMember
@@ -29,11 +35,16 @@
 			where userId = #{userId}
 	</update>
 	
-	<!-- <update id="pwdchange">
+	<update id="pwdchange">
 		update myMember
 			set
-				userPwd = #{userPwd}, userName=#{userName}
+				userPwd = #{userPwd}
 			where userId = #{userId}
 	</update>
-	  -->
+	
+	<select id="checkPw" resultType="int">
+		select count(*) from myMember
+		where userId=#{userId} and userPwd=#{userPwd}
+	</select>
+	
 </mapper>

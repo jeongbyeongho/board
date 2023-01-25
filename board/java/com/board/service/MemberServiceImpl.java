@@ -30,4 +30,12 @@ public class MemberServiceImpl implements MemberService{
 	public void change(MemberVO vo) throws Exception{
 		dao.change(vo);
 	}
+	@Override
+	public void pwdchange(MemberVO vo) throws Exception{
+		dao.pwdchange(vo);
+	}
+	@Override
+	public boolean checkPw(String userId, String userPwd) throws Exception {
+		return dao.checkPw(userId,userPwd);
+	}
 }

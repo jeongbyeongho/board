@@ -6,8 +6,11 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.mariadb.jdbc.internal.logging.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,6 +27,9 @@ import com.board.service.MemberService;
 		@Inject
 		MemberService service;
 		
+		@Autowired
+		BCryptPasswordEncoder passEncoder;
+		
 		
 		// 회원가입 get
 		@RequestMapping(value="/register", method = RequestMethod.GET)
@@ -32,10 +38,15 @@ import com.board.service.MemberService;
 			Logger.info("get register");
 		}
 	
-//	// 회원가입 post	
+	// 회원가입 post	
 	@RequestMapping(value="/register", method = RequestMethod.POST)
 	public String postRegister(MemberVO vo) throws Exception{
 		Logger.info("post register");
+		
+		String inputPwd = vo.getUserPwd();
+		String pwd = passEncoder.encode(inputPwd);
+		vo.setUserPwd(pwd);
+		
 		service.register(vo);
 		return "redirect:/";
 	}
@@ -46,16 +57,24 @@ import com.board.service.MemberService;
 		Logger.info("post login");
 		HttpSession session = req.getSession();
 		MemberVO login = service.login(vo);
-		if(login==null) {
-			session.setAttribute("member", null);
+		boolean passMatch = passEncoder.matches(vo.getUserPwd(),login.getUserPwd());
+		
+		if(login!=null && passMatch) {
+			session.setAttribute("member", login);
+		}else {
 			session.setAttribute("err", "로그인 정보가 올바르지 않아요.");
+			session.setAttribute("member", null);
 			rttr.addFlashAttribute("msg", false);
 			// msg라는 정보에 false라는 값이 들어가서 전송됨. 일회용 값
-			
-		}else {
-			session.setAttribute("member", login);
 		}
 		return "redirect:/";
+		
+		/* if(login == null) {
+		  session.setAttribute("member", null);
+		  rttr.addFlashAttribute("msg", false);
+		 } else {
+		  session.setAttribute("member", login);
+		 } */
 	}
 	
 	// 로그아웃
@@ -102,4 +121,45 @@ import com.board.service.MemberService;
 		session.invalidate();
 		return "redirect:/";
 	}
+	
+	@RequestMapping(value="/pwdchange",method=RequestMethod.GET)
+	public void getPwdChange() throws Exception{
+		Logger.info("get PwdChange");
+		
+	}
+	
+	@RequestMapping(value="/pwdchange",method=RequestMethod.POST)
+	public String postPwdChange(HttpSession session,MemberVO vo) throws Exception{
+		Logger.info("post PwdChange");
+		service.pwdchange(vo);
+		session.invalidate();
+		return "redirect:/";
+	}
+//	@RequestMapping(value="/pwdchange",method=RequestMethod.POST)
+//	public String memberUpdate(HttpSession session, MemberVO vo,Model model) throws Exception {
+//		boolean result= service.checkPw(vo.getUserId(), vo.getUserPwd());
+//		boolean passMatch = passEncoder.matches(vo.getUserPwd(),result);
+//		if(result!=null && passMatch) {
+//			service.pwdchange(vo);
+//			session.invalidate();
+//			return "redirect:/board/listPageSearch?num=1";
+//		}else {
+//			vo.getUserPwd();
+//			model.addAttribute("pwd",vo);
+//			model.addAttribute("message","비밀번호가 불일치합니다.");
+//			return "redirect:/";
+//		}
+//		
+//	
+//	}
+	@ResponseBody
+	@RequestMapping(value="/checkPw", method=RequestMethod.POST)
+	public boolean checkPw(MemberVO vo)throws Exception{
+		
+		MemberVO login = service.login(vo);
+		boolean pwdChk = passEncoder.matches(vo.getUserPwd(), login.getUserPwd());
+		return pwdChk;
+	}
+	
+	
 }
