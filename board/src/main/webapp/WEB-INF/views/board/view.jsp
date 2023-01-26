@@ -98,7 +98,8 @@
 		</div>
 		<br>
 		
-		<c:if test="${member.userName == view.writer}">
+		
+		 <c:if test="${member.userId == view.userId}">
 			<div class="modify-button">
 				<button type="button" class="btn btn-info" onclick="modifyAlert();">게시글 수정</button>
 				<button type="button" class="btn btn-info" onclick="deleteAlert();">게시글 삭제</button>
@@ -114,7 +115,8 @@
 				<p><b>${reply.writer}</b> / <fmt:formatDate value="${reply.regDate}" pattern="yyyy-MM-dd"/> / <fmt:formatDate value="${reply.regDate}" type="time" timeStyle="medium"/> </p>
 				<p>${reply.content}</p>
 				
-				<c:if test="${member.userName == reply.writer}">
+				<!-- <c:if test="${member.userName == reply.writer}"> </c:if>  --> 
+				<c:if test="${member.userId == reply.userId}">
 					<a href="/reply/modify?num=${view.num}&rnum=${reply.rnum}" onclick="return confirm('수정하시겠어요?');">수정</a> / <a href="/reply/delete?num=${view.num}&rnum=${reply.rnum}" onclick="return confirm('삭제하시겠어요?');">삭제</a>
 				</c:if> 
 				<hr>
@@ -124,6 +126,8 @@
 		</c:forEach>
 	</ul>
 </div>
+
+
 <div>
 	<form method="post" name="frm" action="/reply/write">
 		<div id="nav" class="container">

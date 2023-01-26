@@ -129,8 +129,16 @@ import com.board.service.MemberService;
 	}
 	
 	@RequestMapping(value="/pwdchange",method=RequestMethod.POST)
-	public String postPwdChange(HttpSession session,MemberVO vo) throws Exception{
+	public String postPwdChange(HttpSession session,MemberVO vo,HttpServletRequest req) throws Exception{
 		Logger.info("post PwdChange");
+		String inputpass = req.getParameter("Pwd");
+		//String inputPwd = vo.getUserPwd();
+		
+		//String userPwd = passEncoder.encode(inputPwd);
+		//String Pwd = passEncoder.encode(inputPwd);
+		String Pwd = passEncoder.encode(inputpass);
+		vo.setUserPwd(Pwd);
+		
 		service.pwdchange(vo);
 		session.invalidate();
 		return "redirect:/";
@@ -154,8 +162,13 @@ import com.board.service.MemberService;
 //	}
 	@ResponseBody
 	@RequestMapping(value="/checkPw", method=RequestMethod.POST)
-	public boolean checkPw(MemberVO vo)throws Exception{
+	public boolean checkPw(MemberVO vo,HttpServletRequest req)throws Exception{
 		
+//		String userId = req.getParameter("userId");
+//		String userPwd = req.getParameter("userPwd");
+//		String pwd = passEncoder.encode(userPwd);
+//		vo.setUserPwd(pwd);
+
 		MemberVO login = service.login(vo);
 		boolean pwdChk = passEncoder.matches(vo.getUserPwd(), login.getUserPwd());
 		return pwdChk;

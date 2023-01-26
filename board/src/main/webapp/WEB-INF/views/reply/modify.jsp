@@ -35,10 +35,13 @@
 			
 			document.frm.submit();
 		}
+		
 		if("${reply.writer}" != "${member.userName}"){
 			alert("정상적인 루트로 이동해주세요.");
 			location.href='/board/view?num=${reply.num}';
 		}
+		//console.log("${reply.userId}");
+		//console.log("${member.userId}");
 		history.replaceState({}, null, location.pathname);
 	</script>
 </head>

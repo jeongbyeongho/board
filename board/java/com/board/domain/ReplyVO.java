@@ -8,6 +8,7 @@ public class ReplyVO {
 	private String writer;
 	private String content;
 	private Date regDate;
+	private String userId;
 	
 	/*
 	create table tbl_reply(
@@ -23,6 +24,12 @@ public class ReplyVO {
 	 
 	 */
 	
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 	public int getRnum() {
 		return rnum;
 	}

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 // import com.board.dao.BoardDAO;
 import com.board.domain.BoardVO;
+import com.board.domain.MemberVO;
 import com.board.domain.Page;
 import com.board.domain.ReplyVO;
 import com.board.service.BoardService;
@@ -65,18 +66,32 @@ public class BoardController {
 	// 게시물 작성
 	@RequestMapping(value ="/write", method = RequestMethod.POST)
 	// post 방식으로 왔을 때만 로직 수행, get,post 상관없이 로직 수행을 위해선 method 부분 지우면 됨
+	public String postWrite(BoardVO vo,HttpSession session,Model model) throws Exception{
+		MemberVO member = (MemberVO)session.getAttribute("member");
+		vo.setUserId(member.getUserId());
+		model.addAttribute("id",vo);
+		model.addAttribute("write", vo);
+		service.write(vo);
+		return "redirect:/board/listPageSearch?num=1";
+		// 모든 작업을 마치고 /board/list, 게시물 목록 화면으로 이동
+	}
+	
+/*	// 게시물 작성
+	@RequestMapping(value ="/write", method = RequestMethod.POST)
+	// post 방식으로 왔을 때만 로직 수행, get,post 상관없이 로직 수행을 위해선 method 부분 지우면 됨
 	public String postWrite(BoardVO vo) throws Exception{
 		service.write(vo);
 		return "redirect:/board/listPageSearch?num=1";
 		// 모든 작업을 마치고 /board/list, 게시물 목록 화면으로 이동
 	}
+*/
 	
 	// 게시물 조회
 	@RequestMapping(value ="/view", method = RequestMethod.GET)
 	public void getView(@RequestParam("num") int num, Model model) throws Exception{
 		BoardVO vo = service.view(num);
 		model.addAttribute("view", vo);
-		
+		model.addAttribute("write", vo);
 		List<ReplyVO> reply = null;
 		reply = replyService.list(num);
 		model.addAttribute("reply",reply);

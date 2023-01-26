@@ -16,8 +16,8 @@
 	<insert id="write" parameterType="com.board.domain.BoardVO">
 	<!-- parameter 타입은 매퍼에 들어오는 데이터  -->
 		insert into
-			tbl_board(title, content, writer)
-				values(#{title}, #{content}, #{writer})
+			tbl_board(title, content, writer,userId)
+				values(#{title}, #{content}, #{writer},#{userId})
 	</insert>
 	
 	
@@ -25,7 +25,7 @@
  	
 	<select id="view" parameterType="int" resultType="com.board.domain.BoardVO">
 		select
-			num, title, content, writer, regDate, views
+			num, title, content, writer, regDate, views, userId
 		from
 			tbl_board
 		where
@@ -51,6 +51,13 @@
 			from tbl_board
 		where num = #{num}
 	</delete>
+	
+	<!--  게시물 본인 삭제 -->
+	<select id="writerCheck" resultType="String">
+		select userId
+			from myMember
+		where num =#{num}
+	</select>
 	
 	<!--  게시물 총 갯수 -->
 	<select id="count" resultType="int">

@@ -7,20 +7,21 @@
 	<!--  댓글 조회  -->
 	<select id="replyList" resultType="com.board.domain.ReplyVO">
 		select 
-			rnum, num, writer, content, regDate
+			rnum, num, writer, content, regDate, userId
 		from tbl_reply
 			where num = #{num}
 	</select>
 	
 	<!--  댓글 작성  -->
 	<insert id="replyWrite" parameterType="com.board.domain.ReplyVO">
-		insert into tbl_reply(num, writer, content, regDate)
-			value(#{num},#{writer},#{content},#{regDate})
+		insert into tbl_reply(num, writer, content, regDate, userId)
+			value(#{num},#{writer},#{content},#{regDate},#{userId})
 	</insert>
 	
 	<!--  댓글 수정  -->
 	<update id="replyModify" parameterType="com.board.domain.ReplyVO">
 		update tbl_reply set
+			userId = #{userId},
 			writer = #{writer},
 			content = #{content}
 		where rnum = #{rnum} and num = #{num}

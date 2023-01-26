@@ -26,8 +26,15 @@ public class BoardVO {
 	private Date regDate;
 	private int views;
 	private int updateViewCnt;
+	private String userId;
 	
 	
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 	public int getUpdateViewCnt() {
 		return updateViewCnt;
 	}

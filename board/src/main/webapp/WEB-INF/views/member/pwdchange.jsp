@@ -135,32 +135,7 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 	
 <script>
-$("#submit").click(function(){
-	if($("#Pwd").val()==""){
-		alert("비밀번호를 입력해주세요.");
-		$("#Pwd").focus();
-		return false;
-	}
-$.ajax({
-	url : "/member/checkPw",
-	type : "POST",
-	dateType : "json",
-	data : $("#updateForm").serializeArray(),
-	success: function(data){
-		
-		if(data==true){
-			if(confirm("회원수정하시겠습니까?")){
-				$("#updateForm").submit();
-			}
-			
-		}else{
-			alert("패스워드가 틀렸습니다.");
-			return;
-			
-		}
-	}
-})
-});
+
 function checkForm(){
 	
 	if(document.io.Pwd.value ==""){
@@ -188,39 +163,84 @@ function checkForm(){
 	}else{
 		alert("변경 완료되었습니다.\n다시 로그인 해주세요.");
 	}
-	console.log(document.getElementById('userPwd').value);
+	submitBtn();
+	
 }
 </script>
 </head>
 <body>
-	<form role="form" id="updateForm" method="post" autocomplete="off" name="io" action="/member/pwdchange">
+	<form role="form" id="updateForm" method="post" autocomplete="off" name="io">
 		<h1>비밀번호 변경 👊</h1>
 		
 	   <div class="input-box">
 	    <label for="userId" class="String"></label><br>
 	    <input type="text" id="userId" name="userId" class="login" value="${member.userId}" readonly />
 	   </div>
+	   <div class="input-box">
+	    <label for="userPwd" class="String"></label><br>
+	    <input type="password" id="userPwd" name="userPwd" class="login" placeholder="기존 비밀번호"/>
+	   </div>
 	   
 	   <div class="input-box">
 	    <label for="Pwd" class="String"></label><br>
-	    <input type="password" id="Pwd" name="Pwd" class="login" placeholder="기존 비밀번호"/>
+	    <input type="password" id="Pwd" name="Pwd" class="login" placeholder="변경할 비밀번호"/>
 	   </div>
 	   
-	   <div class="input-box">
-	    <label for="userPwd" class="String"></label><br>
-	    <input type="password" id="userPwd" name="userPwd" class="login" placeholder="변경할 비밀번호"/>
-	   </div>
 	   
+	   <div>	   
+			  <button type="submit" class="button_login" id="submit" onclick="return submitBtn()">변경 완료</button>   
+			<!--  <button type="button" class="button_login" id="submit">변경 완료</button>   -->
+	   </div>
 	   <div>
 		       
 		   <button type="button" class="button_login" onclick="location.href='/board/listPageSearch?num=1'">메인으로</button>
 	   </div>
-	   <div>
-	   
-	   </div>
 	  
 	</form>
-	<button type="button" class="button_login" id="submit">변경 완료</button>
+	<script>
+	
+		function submitBtn(){		
+		
+	//$("#submit").click(function(){
+		var query = {userPwd: $("#userPwd").val()};
+		var flag=true;
+		if($("#userPwd").val()==""){
+			alert("기존 비밀번호를 입력해주세요.");
+			$("#userPwd").focus();
+			return false;
+		}
+		if($("#Pwd").val()==""){
+			alert("변경할 비밀번호를 입력해주세요.");
+			$("#Pwd").focus();
+			return false;
+		}
+	
+	$.ajax({
+		url : "/member/checkPw",
+		type : "POST",
+		dateType : "json",
+		data : $("#updateForm").serializeArray(),
+		//data:query,
+		async:false,
+		success: function(data){
+			
+			if(data==true){
+				if(confirm("회원수정하시겠습니까?")){
+					$("#updateForm").submit();
+					flag=true;
+				}
+			}else{
+				alert("패스워드가 틀렸습니다.");
+				flag=false;
+				$("#userPwd").focus();
+				console.log(document.getElementById('userPwd').value);
+				console.log(document.getElementById('Pwd').value);
+			}
+		}
+	});
+	return flag;
+};
+	</script>
 	<!-- <button type="submit" class="button_login" id="submit" onclick="return checkForm()">변경 완료</button>  -->
 	
 </body>
