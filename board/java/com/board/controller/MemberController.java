@@ -57,17 +57,39 @@ import com.board.service.MemberService;
 		Logger.info("post login");
 		HttpSession session = req.getSession();
 		MemberVO login = service.login(vo);
+		
 		boolean passMatch = passEncoder.matches(vo.getUserPwd(),login.getUserPwd());
 		
 		if(login!=null && passMatch) {
 			session.setAttribute("member", login);
-		}else {
+			
+			/*
+			  System.out.println(session.getMaxInactiveInterval()/60);
+			 
+			// 세션시간 30분
+			System.out.println(session.getCreationTime());
+			java.util.Date d = new java.util.Date(session.getCreationTime());
+			System.out.println("마지막으로 엑세스한 시간"+session.getId());
+			
+			System.out.println("세션 생성한 시간"+d);
+			*/
+		}
+		else{
 			session.setAttribute("err", "로그인 정보가 올바르지 않아요.");
 			session.setAttribute("member", null);
 			rttr.addFlashAttribute("msg", false);
 			// msg라는 정보에 false라는 값이 들어가서 전송됨. 일회용 값
+			return "redirect:/";
 		}
+		
+		
+		
 		return "redirect:/";
+		
+		/* if(login==null) {
+			session.setAttribute("member",null);
+			rttr.addFlashAttribute("msg","false");
+		} */
 		
 		/* if(login == null) {
 		  session.setAttribute("member", null);
@@ -76,6 +98,15 @@ import com.board.service.MemberService;
 		  session.setAttribute("member", login);
 		 } */
 	}
+	
+/* @RequestMapping(value="/login",method=RequestMethod.POST)
+	public boolean loginPost(HttpServletRequest req,RedirectAttributes rttr) throws Exception{
+		boolean loginSuccess = service.logincheck(req);
+	
+			
+		}
+	}*/
+	
 	
 	// 로그아웃
 	@RequestMapping(value="/logout", method = RequestMethod.GET)

@@ -34,6 +34,7 @@ public class ReplyController {
 	    ReplyVO vo = new ReplyVO();
 	    vo.setNum(num);
 	    vo.setRnum(rnum);
+	   
 	    
 	    ReplyVO reply = replyService.replySelect(vo);
 	         

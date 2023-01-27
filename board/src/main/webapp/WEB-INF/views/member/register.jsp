@@ -8,7 +8,7 @@
 		box-sizing:border-box;
 	}
 	body{
-		background: grey;
+		background: #f3f3ff;
 	}
 	#box{
 		width:100%;
@@ -22,7 +22,7 @@
 		padding: 15px;
 		text-align:center;
 		
-		background-color:#D8D8D8;
+		background-color:#92dfe5;
 		position: absolute;
 		top:50%;
 		left:50%;
@@ -40,12 +40,10 @@
 		height: 45px;
 		border: none;
 		border-radius : 5px;
-		background-color: #1bbc9b;
+		background-color: #2eb6bb;
 		text-decoration-line:none;
 	}
-	#submit:hover{
-		background:#1bb8bc;
-	}
+	
 	.login{
 		width:100%;
 		border-radius:5px;
@@ -62,11 +60,14 @@
 		border-radius:5px;
 		width:50%;
 		height:35px;
-		background-color:#1bbc9b;
+		background-color:#2eb6bb;
 		color:#eeeff1;
 	}
-	.idCheck:hover{
-		background-color:#1bb8bc;
+	#idhover:hover{
+		background-color:#369599;
+	}
+	#submit:hover{
+		background-color:#369599;
 	}
 	
 </style> 
@@ -173,7 +174,7 @@
  		<label for="userId">아이디</label>
   		<input type="text" class="login" id="userId" name="userId" placeholder="6자 이상 10자 이하"/>
   		<p>
-  			<button type="button" class="idCheck">아이디 중복 확인</button>
+  			<button type="button" id="idhover" class="idCheck">아이디 중복 확인</button>
   		</p>
   		<p class="result">
   			<span class="msg">아이디를 확인해주세요.</span>
@@ -229,7 +230,7 @@ $("#userId").keyup(function(){
 </script> 
 	
  
-   <button type="submit" id="submit" onclick="return checkForm()" disabled="disabled">회원가입</button>
+   <button type="submit" class="registerbtn" id="submit" onclick="return checkForm()" disabled="disabled">회원가입</button>
        
  
  

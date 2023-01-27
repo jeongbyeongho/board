@@ -1,5 +1,7 @@
 package com.board.dao;
 
+import java.util.HashMap;
+
 import com.board.domain.MemberVO;
 
 public interface MemberDAO {
@@ -7,6 +9,7 @@ public interface MemberDAO {
 	
 	public MemberVO login(MemberVO vo) throws Exception;
 	
+	public MemberVO logincheck(HashMap<String, String> map) throws Exception;
 	public MemberVO idCheck(String userId) throws Exception;
 	
 	public void change(MemberVO vo)throws Exception;

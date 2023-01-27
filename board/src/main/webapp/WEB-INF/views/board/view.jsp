@@ -25,7 +25,6 @@
 			list-style:none;
 			padding:0px;
 		}
-
 	</style>
 	<script>
 		function deleteAlert(){
@@ -64,7 +63,7 @@
 			 document.frm.submit();
 		}
 		
-		history.replaceState({}, null, location.pathname);
+		//history.replaceState({}, null, location.pathname);
 	</script>
 </head>
 <body>
@@ -75,9 +74,10 @@
 
 
 <!-- input,text 입력 엘리먼트의 속성 값은 BoardVO와 동일해야 함 -->
+<div id="center">
 <form method="post">
 	<br>
-	<div id="nav" class="container">  
+	<div id="nav" class="container">
 		<!-- input,text 입력 엘리먼트의 속성 값은 BoardVO와 동일해야 함 -->
 		<div class="row">
 			<div class="mb-3">
@@ -96,6 +96,7 @@
 	  		</div>
 			
 		</div>
+
 		<br>
 		
 		
@@ -107,6 +108,7 @@
 		</c:if>
 	</div>
 </form>
+</div>
 <br>
 <div id="nav" class="container">
 	<ul>

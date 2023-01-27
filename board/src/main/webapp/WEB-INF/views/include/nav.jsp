@@ -7,15 +7,23 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+	header>ul>li>a{
+		color:white;
+	}
 	.userName{
 		color: #0080FF;
 	}
 	#list{
 		color:white;
-		padding-top:13px;
+		margin:4px auto;
+	}
+	#nickname{
+		color:black;
+		margin-top:12px;	
 	}
 	#loginBtn{
-		margin-top:5px;	
+		margin:4px auto;
+		
 	}
 	#img{
 		position:block;
@@ -29,32 +37,41 @@
 		margin-top:12px;
 		margin-right:10px;
 	}
+	#logoutbtn{
+		margin:3px auto;
+		background-color:#f0f0f0;
+	}
+	
+
 </style>
 </head>
 <body>
 <div class="iconbar">
-	<a><img id ="img" src="/resources/images/image/neotek_health2.png" width="300px"></a>
+	<a href="/board/listPageSearch?num=1"><img id ="img" src="/resources/images/image/neotek_health2.png" width="300px"></a>
 
 	<div class="rightbar">
 		<!--   <a id="list" href="/member/change">회원 정보 수정</a>  -->
-		<button class="btn btn-light" type="button" id="loginBtn"onclick="location.href='/member/change';">닉네임 변경</button>
-		<button class="btn btn-light" type="button" id="loginBtn"onclick="location.href='/member/pwdchange';">비밀번호 변경</button>
+		<a id="nickname" class="userName">${member.userName}님</a>
 		<c:if test="${member != null }">
-			<button class="btn btn-light" id="loginBtn" type="button" onclick="location.href='../member/logout'; alert('${member.userName}님 로그아웃 되었습니다.');">로그아웃</button>
+			<button class="btn btn-light" id="logoutbtn" type="button" onclick="location.href='../member/logout'; alert('${member.userName}님 로그아웃 되었습니다.');">로그아웃</button>
 		</c:if>
 	</div>
 </div>
 <header id="ul-list">
 	<ul class="nav nav-pills">
 		<li> 
-			<a id="list" href="/board/listPageSearch?num=1">게시글 목록</a>
+			<a class ="" id="loginBtn" href="/board/listPageSearch?num=1">게시글 목록</a>
 		</li>
 		<li>
-			<a id="list" href="/board/write">글 작성</a>
+			<a class="" id="loginBtn" href="/board/write">글 작성</a>
 		</li>
 		<li>
-			<a id="list" class="userName">${member.userName}님</a>
+			<a class="" type="button" id="loginBtn"onclick="location.href='/member/change';">닉네임 변경</a>
 		</li>
+		<li>
+			<a class="" type="button" id="loginBtn"onclick="location.href='/member/pwdchange';">비밀번호 변경</a>
+		</li>
+		
 		
 		
 		<c:if test="${member == null }">

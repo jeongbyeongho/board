@@ -12,7 +12,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 	<script>
  	// url 파라미터 지우는 코드
-  		history.replaceState({},null,location.pathname);
+  		//history.replaceState({},null,location.pathname);
   		//history.pushState({},null,location.pathname);
   		
 	</script>
@@ -22,14 +22,7 @@
 			width:25%;
 			height:5%;
 		}
-		.logo{
-			display:flex;
-			padding:10px 0px;
-		}
-		#nav{
-			padding-top:0px;
-			justify-content:space-between;
-		}
+		
 		
 		
 	</style>
@@ -39,11 +32,11 @@
 <c:if test="${member != null}">
 
 
-<div id="color">
-<div id="nav" class="contatiner">
+
+<div id="nav">
 	<%@ include file="../include/nav.jsp"%>
 </div>
-</div>
+
 
 
 <form role="form" method="POST">

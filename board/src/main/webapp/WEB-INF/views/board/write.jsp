@@ -56,30 +56,31 @@
 	.submit-button{
 		margin-left:-7px;
 	}
+	.form-label{
+		margin-top:15px;
+	}
+	
+
 </style>
 
 <body>
 
-<div id="nav"class="container">
+<div id="nav">
 	<%@ include file="../include/nav.jsp"%>
 </div>
-<section>
 	<c:if test="${msg==null}">
+	<div id="forms">
 		<form name="io" method="post">
 	<!-- input,text 입력 엘리먼트의 속성 값은 BoardVO와 동일해야 함 --> 
 	
 	
-		  	<div data-role="header" class="container">
-		    	<h1>헬스장 추천 게시판</h1><br>
-		  	</div>
-  	
-			<div id="nav" class="container">  
+			<div class="container">  
 				<!-- input,text 입력 엘리먼트의 속성 값은 BoardVO와 동일해야 함 -->
 				<div class="row">
 					<div class="mb-3">
 					<label for="exampleFormControlInput1" class="form-label">제목</label>
 						<input type="text" class="form-control" name="title" id="exampleFormControlInput1" value="${view.title}">
-				</div>	
+					</div>	
 					<div class="mb-3">
 						<label for="exampleFormControlTextarea1" class="form-label">내용</label>
 						<textarea class="form-control" id="exampleFormControlTextarea1" name="content" cols="50" rows="12" maxlength='400'>${view.content}</textarea>
@@ -103,12 +104,12 @@
 				</div>
 			</div>
 		</form>
+		</div>
 	</c:if>
 	
 	<c:if test="${msg==false}">
 		<p> 로그인 후 작성이 가능합니다. </p>
 		<p><a href="/">홈으로</a></p>
 	</c:if>
-</section>
 </body>
 </html>

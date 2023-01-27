@@ -21,7 +21,6 @@
 	<!--  댓글 수정  -->
 	<update id="replyModify" parameterType="com.board.domain.ReplyVO">
 		update tbl_reply set
-			userId = #{userId},
 			writer = #{writer},
 			content = #{content}
 		where rnum = #{rnum} and num = #{num}
@@ -35,7 +34,7 @@
 	
 	<select id="replySelect" resultType="com.board.domain.ReplyVO" parameterType="com.board.domain.ReplyVO">
 		select
-			rnum, num, writer, content, regDate
+			rnum, num, writer, content, regDate, userId
 		from tbl_reply
 			where num = #{num} and rnum = #{rnum}
 	</select>

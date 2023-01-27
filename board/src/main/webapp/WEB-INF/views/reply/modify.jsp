@@ -21,6 +21,9 @@
 		.modify-button{
 			margin-left:-7px;
 		}
+		#top{
+			margin-top:15px;
+		}
 	</style>
 	<script>
 		function formCheck(){
@@ -36,31 +39,28 @@
 			document.frm.submit();
 		}
 		
-		if("${reply.writer}" != "${member.userName}"){
+		if("${reply.userId}" != "${member.userId}"){
+			console.log("${reply.userId}");
+			console.log("${member.userId}");
 			alert("정상적인 루트로 이동해주세요.");
 			location.href='/board/view?num=${reply.num}';
 		}
-		//console.log("${reply.userId}");
-		//console.log("${member.userId}");
 		history.replaceState({}, null, location.pathname);
 	</script>
 </head>
 <body>
 
-<div id="nav" class="container">
+<div id="nav">
 	<%@ include file="../include/nav.jsp"%>
 </div>
 
 
 
 	<form method="post" name="frm" action="/reply/modify">
-		<div data-role="header" class="container">
-    		<h1>헬스장 추천 게시판</h1><br>
-  		</div>
   		
 		<div id="nav" class="container">
 			
-				<label>작성자</label>
+				<label id="top">작성자</label>
 			<div class="row">
 				<div class="col">
 					<input type="text" class="form-control" name="writer" aria-label="First name" value="${reply.writer}" readonly>

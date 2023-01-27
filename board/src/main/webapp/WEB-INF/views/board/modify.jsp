@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시물 수정</title>
+<title>게시글 수정</title>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
@@ -19,13 +19,22 @@
 		.submit-button{
 			margin-left:-7px;
 		}
+		#nav{
+			padding-top:0px;
+			justify-content:space-between;
+		}
+		.form-label{
+			margin-top:15px;
+		}
 	</style>
 <script>
 	//history.replaceState({}, null, location.pathname);
 	//history.pushState({},null,location.pathname);
 </script>
 <script>
-if("${views.writer}" != "${member.userName}"){
+if("${views.userId}" != "${member.userId}"){
+	console.log("${views.userId}");
+	console.log("${member.userId}");
 	alert("정상적인 루트로 이동해주세요.");
 	location.href="/board/listPageSearch?num=1";
 	
@@ -61,14 +70,12 @@ if("${views.writer}" != "${member.userName}"){
 </script>
 </head>
 <body>
-<div id="nav" class="container">
+<div id="nav">
 	<%@ include file="../include/nav.jsp"%>
 </div>
 
 <form method="post" name="io">
-	<div data-role="header" class="container">
-    	<h1>헬스장 추천 게시판</h1><br>
-  	</div>
+	
 	<div id="nav" class="container">  
 		<!-- input,text 입력 엘리먼트의 속성 값은 BoardVO와 동일해야 함 -->
 		<div class="row">

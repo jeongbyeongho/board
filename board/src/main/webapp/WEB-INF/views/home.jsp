@@ -35,7 +35,7 @@
 		box-sizing: border-box;
 	}
 	body{
-		background: grey;
+		background: #f3f3ff;
 	}
 	/* 로그인 */
 	#box{
@@ -49,7 +49,8 @@
 		border-radius:10px;
 		padding: 15px;
 		
-		background-color:#D8D8D8;
+		
+		background-color:#92dfe5;
 		position:absolute;
 		top:50%;
 		left:50%;
@@ -70,16 +71,17 @@
 		height: 45px;
 		border: none;
 		border-radius : 5px;
-		background-color: #1bbc9b;
+		background-color: #2eb6bb;
 	}
 	.button_login:hover{
-		background-color:#1bb8bc;
+		background-color:#369599;
 	}
 	.login{
 		width:100%;
-		border:0;
+		border:1px solid #d2dce8;
 		border-radius: 5px;
 		padding:20px;
+		color: #001c57;
 		
 	}
 	.input-box{
@@ -114,11 +116,8 @@
 		border:0;
 		margin-right:10px;
 	}
-	.img{
-		float:left;
-		width:10%;
-		display:flex;
-		border-radius:10px;
+	#img{
+		text-align:center;
 		
 	}
 	header{
@@ -170,6 +169,12 @@
 		text-align:center;
 		color:red;
 	}
+	#registerbutton{
+		background-color:#2eb6bb;
+	}
+	#registerbutton:hover{
+		background-color:#369599;
+	}
 </style>
 <body>
 
@@ -178,7 +183,8 @@
 
 <div id="box">
 <form role="form" method="post" autocomplete="off" action="/member/login" name="io">
-	<h1>헬스장 추천 게시판 👊</h1>
+	
+	<a><img id ="img" src="/resources/images/image/neotek_health2.png" width="315px"></a>
    <div class="input-box">
     <label for="userId" class="String"></label><br>
     <input type="text" id="userId" name="userId" class="login" placeholder="아이디" />
@@ -192,7 +198,7 @@
    
    <div>
 	   <button type="submit" class="button_login" onclick="checkForm()">로그인</button>    
-	   <button type="button" onclick="location.href='/member/register'; return false;" class="button_login">회원가입</button>
+	   <button type="button" class="button_login" id="registerbutton" onclick="location.href='/member/register'; return false;">회원가입</button>
    </div>
 	<div class="error">
 		<c:if test="${msg == false}">
