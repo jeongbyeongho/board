@@ -62,10 +62,10 @@ import com.board.service.MemberService;
 		
 		if(login!=null && passMatch) {
 			session.setAttribute("member", login);
-			
+			long timeset = session.getMaxInactiveInterval() - session.getCreationTime();
+			System.out.println(timeset);
 			/*
 			  System.out.println(session.getMaxInactiveInterval()/60);
-			 
 			// 세션시간 30분
 			System.out.println(session.getCreationTime());
 			java.util.Date d = new java.util.Date(session.getCreationTime());
@@ -73,6 +73,9 @@ import com.board.service.MemberService;
 			
 			System.out.println("세션 생성한 시간"+d);
 			*/
+			// String sessionTime =formatter.format(time);
+			// session.setAttrtibute로 시간 작성해서 최근접속 기록 남기기 
+			
 		}
 		else{
 			session.setAttribute("err", "로그인 정보가 올바르지 않아요.");
@@ -139,12 +142,13 @@ import com.board.service.MemberService;
 		}
 		return result;
 	}
-	
+	// 닉네임 변경 get
 	@RequestMapping(value="/change",method=RequestMethod.GET)
 	public void getChange() throws Exception{
 		Logger.info("get change");
 		
 	}
+	// 닉네임 변경 post 
 	@RequestMapping(value="/change",method=RequestMethod.POST)
 	public String postChange(HttpSession session,MemberVO vo) throws Exception{
 		Logger.info("post change");
@@ -152,13 +156,13 @@ import com.board.service.MemberService;
 		session.invalidate();
 		return "redirect:/";
 	}
-	
+	// 비밀번호 변경 get
 	@RequestMapping(value="/pwdchange",method=RequestMethod.GET)
 	public void getPwdChange() throws Exception{
 		Logger.info("get PwdChange");
 		
 	}
-	
+	// 비밀번호 변경 post
 	@RequestMapping(value="/pwdchange",method=RequestMethod.POST)
 	public String postPwdChange(HttpSession session,MemberVO vo,HttpServletRequest req) throws Exception{
 		Logger.info("post PwdChange");
@@ -191,6 +195,7 @@ import com.board.service.MemberService;
 //		
 //	
 //	}
+		// 비밀번호 체크
 	@ResponseBody
 	@RequestMapping(value="/checkPw", method=RequestMethod.POST)
 	public boolean checkPw(MemberVO vo,HttpServletRequest req)throws Exception{
@@ -204,6 +209,30 @@ import com.board.service.MemberService;
 		boolean pwdChk = passEncoder.matches(vo.getUserPwd(), login.getUserPwd());
 		return pwdChk;
 	}
+
+	@RequestMapping(value="/withdrawal",method=RequestMethod.GET)
+	public void getWithdrawal() throws Exception{
+		Logger.info("회원 탈퇴 GET");
+		
+	}
+	@RequestMapping(value="/withdrawal",method=RequestMethod.POST)
+	public String postWithdrawal(MemberVO vo,HttpSession session,RedirectAttributes rttr,HttpServletRequest req) throws Exception{
+		 Logger.info("회원 탈퇴 POST");
+		String inputpass = req.getParameter("Pwd");
+		String Pwd = passEncoder.encode(inputpass);
+		vo.setUserPwd(Pwd);
+		
+		service.withdrawal(vo);
+		session.invalidate();
+		return "redirect:/";
+		 
+		 
+		 
+		// MemberVO login = service.login(vo);
+		//service.withdrawal(vo);
+	}
+		
+	
 	
 	
 }

@@ -38,6 +38,11 @@ public class MemberServiceImpl implements MemberService{
 	public void pwdchange(MemberVO vo) throws Exception{
 		dao.pwdchange(vo);
 	}
+	
+	@Override
+	public void withdrawal(MemberVO vo)throws Exception{
+		dao.withdrawal(vo);
+	}
 	@Override
 	public boolean checkPw(String userId, String userPwd) throws Exception {
 		return dao.checkPw(userId,userPwd);

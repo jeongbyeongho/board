@@ -54,6 +54,10 @@ public class MemberDAOImpl implements MemberDAO{
 		sql.update(namespace+".pwdchange",vo);
 	}
 	@Override
+	public void withdrawal(MemberVO vo)throws Exception{
+		sql.delete(namespace+".withdrawal",vo);
+	}
+	@Override
 	public boolean checkPw(String userId, String userPwd) throws Exception{
 		boolean result = false;
 		Map<String, String> map = new HashMap<String,String>();

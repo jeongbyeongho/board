@@ -47,4 +47,9 @@
 		where userId=#{userId} and userPwd=#{userPwd}
 	</select>
 	
+	<delete id="withdrawal">
+		delete from myMember
+		where userId=#{userId} AND userPwd=#{userPwd}
+	</delete>
+	
 </mapper>

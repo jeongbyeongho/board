@@ -16,4 +16,6 @@ public interface MemberDAO {
 	
 	public void pwdchange(MemberVO vo) throws Exception;
 	public boolean checkPw(String userId, String userPwd) throws Exception;
+	
+	public void withdrawal(MemberVO vo)throws Exception;
 }

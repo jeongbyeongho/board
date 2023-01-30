@@ -11,6 +11,7 @@ public interface MemberService {
 	public MemberVO idCheck(String userId)throws Exception;
 	public void change(MemberVO vo) throws Exception;
 	public void pwdchange(MemberVO vo) throws Exception;
+	public void withdrawal(MemberVO vo)throws Exception;
 	public boolean checkPw(String userId, String userPwd) throws Exception;
 	public boolean logincheck(HttpServletRequest request)throws Exception;
 }
