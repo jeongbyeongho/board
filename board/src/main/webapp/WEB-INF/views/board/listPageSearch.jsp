@@ -22,7 +22,13 @@
 			width:25%;
 			height:5%;
 		}
-		
+		#pagecenter{
+			text-align:center;
+		}
+		#search_bar_inner{
+			width:100%;
+			margin-left:30%;
+		}
 		
 		
 	</style>
@@ -75,8 +81,8 @@
 </table>
 </div>
 </form>
-<div class="container">
-<nav aria-label="Page navigation example">
+<div class="container" id="pagecenter">
+<nav id="nav_bar" aria-label="Page navigation example">
   <ul class="pagination">
     <c:if test="${page.prev}">
 		<li class="page-item"><a class="page-link" href="/board/listPageSearch?num=${page.startPageNum - 1}${page.searchTypeKeyword}">이전</a></li>
@@ -102,8 +108,8 @@
 		location.href="/";
 	</script>
 </c:if>
-<div class="container">
-	<div class="search row">
+<div class="container" id="search_bar">
+	<div class="search row" id="search_bar_inner">
 		<div class="col-xs-2 col-sm-2">
 			<select name="searchType" class="form-control">
 				<option value="title" <c:if test="${page.searchType eq 'title'}">selected</c:if>>제목</option>

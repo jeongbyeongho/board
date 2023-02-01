@@ -35,14 +35,18 @@ public class MemberDAOImpl implements MemberDAO{
 	}
 	
 	@Override
-	public MemberVO logincheck(HashMap<String, String> map) throws Exception {
-	return sql.selectOne(namespace + ".login", map);
+	public MemberVO login(HashMap<String, String> map) throws Exception {
+	return sql.selectOne(namespace + ".loginBcrypt", map);
 	}
 	
 	@Override
 	public MemberVO idCheck(String userId) throws Exception{
 		return sql.selectOne(namespace +".idCheck",userId);
 		
+	}
+	@Override
+	public MemberVO nickCheck(String userName) throws Exception{
+		return sql.selectOne(namespace+".nickCheck",userName);
 	}
 	@Override
 	public void change(MemberVO vo)throws Exception{

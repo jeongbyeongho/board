@@ -25,7 +25,7 @@
 	}
 	#loginBtn{
 		margin:4px auto;
-		
+		color:white;
 	}
 	#img{
 		position:block;
@@ -42,6 +42,7 @@
 	#logoutbtn{
 		margin:3px auto;
 		background-color:#f0f0f0;
+		padding:3px 12px;
 	}
 	#continues{
 		border:none;
@@ -49,7 +50,16 @@
 		padding:4px 8px;
 	}
 
+	#hidden_accesstime{
+		display:none;
+		position:absolute;
+	}
+	#nickname:hover + #hidden_accesstime{
+		display:block;
+	}
 </style>
+
+
 
 <script>
 
@@ -57,26 +67,25 @@
 
 <%
 	String pattern = "mm분 ss초";
-	SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd (a)hh:mm:ss");
+	
 	long lastTime = session.getLastAccessedTime();
-	// System.out.println("세션 유지 시간:" + (session.getLastAccessedTime()*1000)/60);
+	System.out.println("접속 시간: "+formatter.format(new Date(lastTime)));
 	
-	sdf.format(new Date(lastTime));
-	System.out.println("세션 유지 시간 : "+sdf.format(new Date(lastTime)));
-
-	//System.out.println((session.getCreationTime()/1000));
-	
-	System.out.println("세션 유효 시간:"+(session.getMaxInactiveInterval()/60));
+	//System.out.println("세션 유효 시간:"+(session.getMaxInactiveInterval()/60));
 	
 	java.util.Date d = new java.util.Date(session.getCreationTime());
 	System.out.println("세션 생성된 시간 : "+ d );
-	
 	int interval = session.getMaxInactiveInterval();
 	session.setMaxInactiveInterval(interval);
 	
-	System.out.println("세션 설정 시간: "+interval);
+	
+	
+	Date a = new Date();
+	//SimpleDateFormat sf= new SimpleDateFormat("yyyy년 MM월 dd일 a hh:mm:ss");
 	
 	// 자리비움 시간으로 하고, 시간이 만료되었을 때 로그아웃 처리 후 로그인 화면으로 이동
+	
 	
 %>
 
@@ -90,7 +99,7 @@ var x = setInterval(function(){
 	min=parseInt(time/60);
 	sec = time%60;
 	
-	document.getElementById("demo").innerHTML = "자리 비움 : "+ min+"분"+sec+"초";
+	document.getElementById("demo").innerHTML = ""+ min+"분"+sec+"초";
 	time--;
 	
 	if(time<0){
@@ -104,26 +113,72 @@ var x = setInterval(function(){
 },1000);
 
 
-	
-	
-	
-
 
 </script>
+
+
+
 </head>
 <body>
+
 <div class="iconbar">
 	<a href="/board/listPageSearch?num=1"><img id ="img" src="/resources/images/image/neotek_health2.png" width="300px"></a>
 
 	<div class="rightbar">
+		<a id="clock" style="color:gray;"></a>
 		<a id="nickname" class="userName">${member.userName}님</a>
+		<a id="hidden_accesstime"><%=formatter.format(new Date(lastTime)) %></a>
 		<c:if test="${member != null }">
 			<button class="btn btn-light" id="logoutbtn" type="button" onclick="location.href='../member/logout'; alert('${member.userName}님 로그아웃 되었습니다.');">로그아웃</button>
 			<a id="demo" style=""></a>
 		</c:if>
 		<button type="button" id="continues" onclick="window.location.reload()">연장</button>
+		
 	</div>
 </div>
+<script>
+function clock() {
+    var date = new Date();
+
+    var month = date.getMonth();
+
+    var clockDate = date.getDate();
+ 
+    var day = date.getDay();
+
+    var week = ['일', '월', '화', '수', '목', '금', '토'];
+
+    var hours = date.getHours();
+
+    var minutes = date.getMinutes();
+   
+    var seconds = date.getSeconds();
+
+    if(hours<10){
+    	hours="0"+hours;	
+    }
+    if(minutes<10){
+    	minutes="0"+minutes;
+    }
+    if(seconds<10){
+    	seconds="0"+seconds;
+    }
+   
+    
+    document.getElementById("clock").innerText = (month+1)+"월"+ clockDate +"일" + "("+ week[day]+")" + hours+":" +minutes+ ":" +seconds;
+   
+    
+}
+
+function init() {
+	clock();
+	setInterval(clock, 1000);
+}
+
+init();
+
+</script>
+
 <header id="ul-list">
 	<ul class="nav nav-pills">
 		<li> 

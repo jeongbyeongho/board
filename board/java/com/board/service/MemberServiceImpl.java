@@ -31,6 +31,10 @@ public class MemberServiceImpl implements MemberService{
 		return dao.idCheck(userId);
 	}
 	@Override
+	public MemberVO nickCheck(String userName) throws Exception{
+		return dao.nickCheck(userName);
+	}
+	@Override
 	public void change(MemberVO vo) throws Exception{
 		dao.change(vo);
 	}
@@ -47,26 +51,27 @@ public class MemberServiceImpl implements MemberService{
 	public boolean checkPw(String userId, String userPwd) throws Exception {
 		return dao.checkPw(userId,userPwd);
 	}
+	 
 	@Override
-	public boolean logincheck(HttpServletRequest request)throws Exception{
+	public boolean login(HttpServletRequest req)throws Exception{
 		HashMap<String,String> map= new HashMap<String,String>();
 		boolean loginSuccess = false;
 		
-		String userId = request.getParameter("userId");
-		String userPwd = request.getParameter("userPwd");
+		String userId = req.getParameter("userId");
+		String userPwd = req.getParameter("userPwd");
 		
 		map.put("userId", userId);
 		map.put("userPwd", userPwd);
-		MemberVO login = dao.logincheck(map);
+		MemberVO login = dao.login(map);
 		
 		if (login != null) {
-			HttpSession session = request.getSession();
-
-			// 세션에 로그인 정보를 부여함
-			session.setAttribute("login", login);
-
-			// 로그인 성공 여부를 변경
+//			HttpSession session = req.getSession();
+//			// 세션에 로그인 정보를 부여함
+//			session.setAttribute("member", login);
+//			// 로그인 성공 여부를 변경
 			loginSuccess = true;
+		}else {
+			loginSuccess = false;
 		}
 
 			return loginSuccess;

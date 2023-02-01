@@ -21,11 +21,16 @@
 		from myMember
 		where userId = #{userId}
 	</select>
-	
 	<select id="idCheck" resultType="com.board.domain.MemberVO">
 		select userId
 		from myMember
 		where userId = #{userId}
+	</select>
+	
+	<select id="nickCheck" resultType="com.board.domain.MemberVO">
+		select userName
+		from myMember
+		where userName=#{userName}
 	</select>
 	
 	<update id="change">

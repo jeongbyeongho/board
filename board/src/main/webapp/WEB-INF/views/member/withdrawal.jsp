@@ -5,8 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>닉네임 변경</title>
-
+<title>회원 탈퇴</title>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <style>
 *{
 		box-sizing: border-box;
@@ -30,7 +30,9 @@
 	h1{
 		text-align:center;
 	}
-	
+	.button_login:hover{
+		background-color:grey;
+	}
 	.button_login{
 		margin : 10px auto;
 		font-weight:bold;
@@ -42,9 +44,6 @@
 		border: none;
 		border-radius : 5px;
 		background-color: #1bbc9b;
-	}
-	.button_login:hover{
-		background-color:grey;
 	}
 	.login{
 		width:100%;
@@ -133,37 +132,14 @@
 	span{
 		font-size:1.1vw;
 	}
-	
-	
 	</style>
 	
-<script>
-function checkForm(){
-	if(document.io.userName.value == null){
-		alert("닉네임을 입력해주세요.");
-		document.io.userName.focus();
-		return false;
-	}else if(document.io.userName.value.length>8){
-		alert("닉네임은 8글자 이상 쓸 수 없습니다.");
-		return false;
-	}else if(document.io.userName.value.length<2){
-		alert("닉네임은 2글자 이상 작성해주세요.");
-		document.io.userName.focus();
-		return false;
-	}
+
 	
-	
-	else{
-		alert("변경 완료되었습니다.\n다시 로그인 해주세요.");
-	}
-	// console.log(document.getElementById('userPwd').value);
-}
-</script>
-<script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
 </head>
 <body>
-	<form role="form" method="post" autocomplete="off" name="io">
-		<h1>닉네임 변경 👊</h1>
+	<form role="form" method="post" id="deleteForm" autocomplete="off" name="io">
+		<h1>회원 탈퇴 👊</h1>
 		
 	   <div class="input-box">
 	    <label for="userId" class="String"></label><br>
@@ -172,49 +148,77 @@ function checkForm(){
 	   
 	   
 	   <div class="input-box">
-	    <label for="userName" class="String"></label><br>
-	    <input type="text" id="userName" name="userName" class="login" value="${member.userName}" placeholder="변경할 닉네임" />
+	    <label for="userPwd" class="String"></label><br>
+	    <input type="password" id="userPwd" name="userPwd" class="login" placeholder="현재 비밀번호 " />
 	   </div>
-	   <button type="button" id="idhover" class="nickCheck">닉네임 중복 확인</button>
-	   <p class="result">
-  			<span class="msg">닉네임을 작성해주세요.</span>
-  		</p>	   
+	   <div class="input-box">
+	    <label for="Pwd" class="String"></label><br>
+	    <input type="password" id="Pwd" name="Pwd" class="login" placeholder="비밀번호 재입력 " />
+	   </div>
+	   	   
 	   <div>
-		   <button type="submit" id="submit" class="button_login" onclick="return checkForm()" disabled="disabled">변경 완료</button>    
+		   <button type="button" class="button_login" id="submit" onclick="return submitBtn()">회원 탈퇴</button>    
 		   <button type="button" class="button_login" onclick="location.href='/board/listPageSearch?num=1'">메인으로</button>
 	   </div>
-	  <script>
-		  $(".nickCheck").click(function(){
-	   
-	  	var query = {userName : $("#userName").val()};
-	   
-	   $.ajax({
-	    url : "/member/nickCheck",
-	    type : "post",
-	    data : query,
-	    success : function(data) {
-	    
-	     if(data == 1) {
-	      $(".result .msg").text("사용 불가");
-	      $(".result .msg").attr("style", "color:red","font-weight:bold");      
-	      $("#submit").attr("disabled","disabled");
-	     } else {
-	      $(".result .msg").text("사용 가능");
-	      $(".result .msg").attr("style", "color:#00f","font-weight:bold");
-	      $("#submit").removeAttr("disabled");
-	     }
-	    }
-	   });  // ajax 끝
-	});
-	
-	
-	$("#userName").keyup(function(){
-		$(".result .msg").text("사용 불가");
-		$(".result .msg").attr("style","color:red");
-		$("#submit").attr("disabled","disabled");
-	})
 	  
-	  </script>
 	</form>
+	<script>
+	
+	
+	
+	
+	function submitBtn(){		
+	
+	//$("#submit").click(function(){
+		var query = {userPwd: $("#userPwd").val()};
+		var flag=true;
+		if($("#userPwd").val()==""){
+			alert("비밀번호를 입력해주세요.");
+			$("#userPwd").focus();
+			return false;
+		}
+		if($("#Pwd").val()==""){
+			alert("비밀번호를 재입력해주세요.");
+			$("#Pwd").focus();
+			return false;
+		}
+		if($("#userPwd").val()!=$("#Pwd").val()){
+			alert("비밀번호가 옳지 않습니다.\n다시 입력해주세요.");
+			$("#userPwd").val()="";
+			$("#Pwd").val()="";
+			$("#userPwd").focus();
+			return false;
+		}
+	
+	$.ajax({
+		url : "/member/checkPw",
+		type : "POST",
+		dateType : "json",
+		data : $("#deleteForm").serializeArray(),
+		//data:query,
+		async:false,
+		success: function(data){
+			
+			if(data==true){
+				if(confirm("회원탈퇴하시겠습니까?")){
+					$("#deleteForm").submit();
+					flag=true;
+				}
+			}else{
+				alert("비밀번호가 틀렸습니다.");
+				flag=false;
+				$("#userPwd").focus();
+				console.log(document.getElementById('userPwd').value);
+				console.log(document.getElementById('Pwd').value);
+			}
+			
+		}
+	});
+	return flag;
+};
+
+
+
+</script>
 </body>
 </html>

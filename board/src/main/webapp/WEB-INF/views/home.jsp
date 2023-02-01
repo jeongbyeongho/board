@@ -6,29 +6,8 @@
 <head>
 	<title>헬스장 추천 게시판</title>
 </head>
+<script src='https://code.jquery.com/jquery-3.3.1.min.js'></script>
 
-<script>
-
-	var reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
-	function checkForm(){
-		if(document.io.userId.value ==""){
-			alert("아이디를 입력해주세요.");
-			return false;
-		}
-		if(reg.test(document.io.userId.value)){
-			alert("특수문자를 입력할 수 없습니다.");
-			document.io.userId.value="";
-			document.io.userId.focus();
-			return false;
-		}
-		if(document.io.userPwd.value ==""){
-			alert("비밀번호를 입력해주세요.");
-			return false;
-		}
-		document.io.submit();
-	}
-	// String myName=(String)request.getAttribute("userID");
-</script>
 <style>
 
 	*{
@@ -106,7 +85,7 @@
 	li{
 		list-style:none;
 	}
-	.right_logout, div>span{
+	.right_logout{
 		float:right;
 		display:inline;
 		padding: 5px;
@@ -162,8 +141,11 @@
 		margin:auto;
 	
 	}
-	span{
-		font-size:1.1vw;
+	.msg{
+		font-size:13px;
+	}
+	.result{
+		text-align:center;
 	}
 	.error{
 		text-align:center;
@@ -195,11 +177,62 @@
     <input type="password" id="userPwd" name="userPwd" class="login" placeholder="비밀번호"/>
    </div>
    
+   <div class="result">
+  			<span class="msg"></span>
+  		</div>
    
    <div>
-	   <button type="submit" class="button_login" onclick="checkForm()">로그인</button>    
+	   <button type="submit" id="submit" class="button_login" onclick="checkForm()" disabled="disabled">로그인</button>    
 	   <button type="button" class="button_login" id="registerbutton" onclick="location.href='/member/register'; return false;">회원가입</button>
    </div>
+   <script>
+
+
+	var reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
+	function checkForm(){
+		if(document.io.userId.value ==""){
+			alert("아이디를 입력해주세요.");
+			return false;
+		}
+		if(reg.test(document.io.userId.value)){
+			alert("특수문자를 입력할 수 없습니다.");
+			document.io.userId.value="";
+			document.io.userId.focus();
+			return false;
+		}
+		if(document.io.userPwd.value ==""){
+			alert("비밀번호를 입력해주세요.");
+			return false;
+		}
+	}
+		   $("#userPwd").click(function(){
+		   	   
+		   	   var query = {userId : $("#userId").val()};
+		   	   
+		   	   $.ajax({
+		   	    url : "/member/idCheck",
+		   	    type : "post",
+		   	    data : query,
+		   	    success : function(data) {
+		   	    
+		   	     if(data == 1) {
+		   	   	  $(".result .msg").empty();
+		   	      $("#submit").removeAttr("disabled");
+		   	     } else {
+		   	    	$(".result .msg").text("존재하지 않는 아이디입니다.");
+		   	    	$(".result .msg").attr("style","color:red","font-weight:bold");
+		   	    	$("#userId").focus();
+		   	      $("#submit").attr("disabled","disabled");
+		   	     }
+		   	    }
+		   	   });  // ajax 끝
+		   	});
+		 
+	//	document.io.submit();
+	
+	// String myName=(String)request.getAttribute("userID");
+</script>
+
 	<div class="error">
 		<c:if test="${msg == false}">
 			<p>아이디 및 비밀번호가 틀렸습니다.</p>

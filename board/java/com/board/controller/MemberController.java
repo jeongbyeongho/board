@@ -2,6 +2,7 @@ package com.board.controller;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.mariadb.jdbc.internal.logging.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.board.domain.MemberVO;
 import com.board.service.MemberService;
+
 
 	@Controller
 	@RequestMapping("/member/*")
@@ -50,20 +53,31 @@ import com.board.service.MemberService;
 		service.register(vo);
 		return "redirect:/";
 	}
+
 	
 	// 로그인
-	@RequestMapping(value="/login", method = RequestMethod.POST)
+	@RequestMapping(value="/login",method = RequestMethod.POST)
 	public String login(MemberVO vo, HttpServletRequest req, RedirectAttributes rttr)throws Exception{
 		Logger.info("post login");
 		HttpSession session = req.getSession();
-		MemberVO login = service.login(vo);
 		
+		MemberVO login = service.login(vo);
 		boolean passMatch = passEncoder.matches(vo.getUserPwd(),login.getUserPwd());
 		
+		boolean loginSuccess = service.login(req);
+		System.out.println("로그인 성공 여부 : "+ loginSuccess);
+		
+		
+		
 		if(login!=null && passMatch) {
+			//System.out.println("passMatch: " + passMatch);
 			session.setAttribute("member", login);
+			
 			long timeset = session.getMaxInactiveInterval() - session.getCreationTime();
 			System.out.println(timeset);
+			System.out.println("userId:" +vo.getUserId());
+			System.out.println("userId:" +vo.getUserId().isEmpty());
+			
 			/*
 			  System.out.println(session.getMaxInactiveInterval()/60);
 			// 세션시간 30분
@@ -75,42 +89,19 @@ import com.board.service.MemberService;
 			*/
 			// String sessionTime =formatter.format(time);
 			// session.setAttrtibute로 시간 작성해서 최근접속 기록 남기기 
-			
-		}
-		else{
+		}else{
 			session.setAttribute("err", "로그인 정보가 올바르지 않아요.");
 			session.setAttribute("member", null);
 			rttr.addFlashAttribute("msg", false);
 			// msg라는 정보에 false라는 값이 들어가서 전송됨. 일회용 값
 			return "redirect:/";
 		}
-		
-		
-		
 		return "redirect:/";
 		
-		/* if(login==null) {
-			session.setAttribute("member",null);
-			rttr.addFlashAttribute("msg","false");
-		} */
-		
-		/* if(login == null) {
-		  session.setAttribute("member", null);
-		  rttr.addFlashAttribute("msg", false);
-		 } else {
-		  session.setAttribute("member", login);
-		 } */
 	}
+	// 로그인화면 아이디 체크
 	
-/* @RequestMapping(value="/login",method=RequestMethod.POST)
-	public boolean loginPost(HttpServletRequest req,RedirectAttributes rttr) throws Exception{
-		boolean loginSuccess = service.logincheck(req);
-	
-			
-		}
-	}*/
-	
-	
+
 	// 로그아웃
 	@RequestMapping(value="/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) throws Exception{
@@ -141,6 +132,20 @@ import com.board.service.MemberService;
 			result=1;
 		}
 		return result;
+	}
+	@ResponseBody
+	@RequestMapping(value="/nickCheck",method=RequestMethod.POST)
+	public int postNickCheck(HttpServletRequest req) throws Exception{
+		Logger.info("post nickCheck");
+		String userName=req.getParameter("userName");
+		MemberVO nickCheck = service.nickCheck(userName);
+		
+		int result=0;
+		if(nickCheck!=null) {
+			result=1;
+		}
+		return result;
+		
 	}
 	// 닉네임 변경 get
 	@RequestMapping(value="/change",method=RequestMethod.GET)
@@ -232,6 +237,46 @@ import com.board.service.MemberService;
 		//service.withdrawal(vo);
 	}
 		
+	
+	/*
+    @RequestMapping(value = "/login", method = { RequestMethod.POST })
+    public Object login(HttpServletRequest request, HttpServletResponse response, LoginVO loginVo) throws Exception {
+        Map<String, Object> result = new HashMap<String, Object>();
+
+        String id = ServletRequestUtils.getStringParameter(request, "schId", "");
+        String pw = ServletRequestUtils.getStringParameter(request, "schPw", "");
+        String Epw = SystemInfor.Base64encode(pw);
+
+        LoginVO loginVO = mapper.login(id, Epw);
+        if (loginVO == null) {
+            result.put("result", "로그인 후 사용하십시오.");
+            response.setContentType("text/html; charset=UTF-8");
+			 
+			PrintWriter out = response.getWriter();
+			 
+			out.println("<script>alert('아이디가 없거나, 잘못된 비밀번호 입니다.');</script>");
+			 
+			out.flush();
+			return "/login";
+        } else {
+            HttpSession session = request.getSession(true);
+            session.setAttribute("id", id);
+            session.setAttribute("name", loginVO.getUser_Nm());
+            session.setAttribute("rest", loginVO.getRest());
+            session.setAttribute("restNm", loginVO.getRest_nm());
+            request.getSession().setMaxInactiveInterval(60 * 5);
+            return "redirect:/main";
+        }
+        //return result;
+    }
+    */
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
