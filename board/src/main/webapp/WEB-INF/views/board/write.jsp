@@ -68,6 +68,7 @@
 <div id="nav">
 	<%@ include file="../include/nav.jsp"%>
 </div>
+
 	<c:if test="${msg==null}">
 	<div id="forms">
 		<form name="io" method="post">
@@ -95,12 +96,8 @@
 					<br>
 		 	<div class="submit-button">
 		    	<button type="button" class="btn btn-info" onclick="checkForm()">작성</button>
-		    	
-		    	  
+
 				<!--  <button type="submit" onclick="if(!confirm('작성하시겠습니까?'))">완료</button> -->
-				
-					
-				 
 				</div>
 			</div>
 		</form>

@@ -167,6 +167,10 @@
 <form role="form" method="post" autocomplete="off" action="/member/login" name="io">
 	
 	<a><img id ="img" src="/resources/images/image/neotek_health2.png" width="315px"></a>
+   <div class="result">
+  		<span class="msg"></span>
+  	</div>
+   
    <div class="input-box">
     <label for="userId" class="String"></label><br>
     <input type="text" id="userId" name="userId" class="login" placeholder="아이디" />
@@ -177,9 +181,6 @@
     <input type="password" id="userPwd" name="userPwd" class="login" placeholder="비밀번호"/>
    </div>
    
-   <div class="result">
-  			<span class="msg"></span>
-  		</div>
    
    <div>
 	   <button type="submit" id="submit" class="button_login" onclick="checkForm()" disabled="disabled">로그인</button>    
@@ -205,8 +206,33 @@
 			return false;
 		}
 	}
-		   $("#userPwd").click(function(){
-		   	   
+
+	   $("#userPwd").click(function(){
+	   	   
+	   	   var query = {userId : $("#userId").val()};
+	   	   
+	   	   $.ajax({
+	   	    url : "/member/idCheck",
+	   	    type : "post",
+	   	    data : query,
+	   	    success : function(data) {
+	   	    
+	   	     if(data == 1) {
+	   	   	  $(".result .msg").empty();
+	   	      $("#submit").removeAttr("disabled");
+	   	     } else {
+	   	    	$(".result .msg").text("존재하지 않는 아이디입니다.");
+	   	    	$(".result .msg").attr("style","color:red","font-weight:bold");
+	   	    	$("#userId").focus();
+	   	      $("#submit").attr("disabled","disabled");
+	   	     }
+	   	    }
+	   	   });  // ajax 끝
+	   	});
+			$("#userId").keydown(function(e){
+			if(e.keyCode==9){
+				
+								   	   
 		   	   var query = {userId : $("#userId").val()};
 		   	   
 		   	   $.ajax({
@@ -226,8 +252,8 @@
 		   	     }
 		   	    }
 		   	   });  // ajax 끝
-		   	});
-		 
+		   	}});
+
 	//	document.io.submit();
 	
 	// String myName=(String)request.getAttribute("userID");

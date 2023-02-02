@@ -72,9 +72,8 @@ import com.board.service.MemberService;
 		if(login!=null && passMatch) {
 			//System.out.println("passMatch: " + passMatch);
 			session.setAttribute("member", login);
+			session.setMaxInactiveInterval(3000);
 			
-			long timeset = session.getMaxInactiveInterval() - session.getCreationTime();
-			System.out.println(timeset);
 			System.out.println("userId:" +vo.getUserId());
 			System.out.println("userId:" +vo.getUserId().isEmpty());
 			
