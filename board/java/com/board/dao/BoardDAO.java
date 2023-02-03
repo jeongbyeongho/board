@@ -1,6 +1,7 @@
 package com.board.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.board.domain.BoardVO;
 
@@ -35,4 +36,7 @@ public interface BoardDAO {
 	public void updateViewCnt(int num) throws Exception;
 	
 	public int searchCount(String searchType, String keyword) throws Exception;
+	
+	
+	
 }

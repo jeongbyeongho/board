@@ -1,20 +1,26 @@
 package com.board.controller;
 
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FilenameUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 // import com.board.dao.BoardDAO;
 import com.board.domain.BoardVO;
@@ -27,7 +33,8 @@ import com.board.service.ReplyService;
 @Controller
 @RequestMapping("/board/*")
 public class BoardController {
-	 
+	private static final Logger Logger = LoggerFactory.getLogger(BoardController.class); 
+	
 	@Inject
 	private BoardService service;
 	
@@ -54,7 +61,6 @@ public class BoardController {
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
 	public void getWrite(HttpSession session, Model model) throws Exception{
 	
-		
 		Object loginInfo = session.getAttribute("member");
 		
 		if(loginInfo == null) {
@@ -67,11 +73,28 @@ public class BoardController {
 	@RequestMapping(value ="/write", method = RequestMethod.POST)
 	// post 방식으로 왔을 때만 로직 수행, get,post 상관없이 로직 수행을 위해선 method 부분 지우면 됨
 	public String postWrite(BoardVO vo,HttpSession session,Model model) throws Exception{
+		Logger.info("글 작성");
+		
+		String fileName =null;
+		MultipartFile uploadFile = vo.getUploadFile();
+		if(!uploadFile.isEmpty()) {
+			String originalFileName = uploadFile.getOriginalFilename();
+			String ext=FilenameUtils.getExtension(originalFileName);
+			
+			UUID uuid = UUID.randomUUID();
+			fileName=uuid+"."+ext;
+			uploadFile.transferTo(new File("D:\\upload\\"+fileName));
+		}
+		vo.setFileName(fileName);
+		
+		
+		
 		MemberVO member = (MemberVO)session.getAttribute("member");
 		vo.setUserId(member.getUserId());
 		model.addAttribute("id",vo);
 		model.addAttribute("write", vo);
 		service.write(vo);
+	
 		return "redirect:/board/listPageSearch?num=1";
 		// 모든 작업을 마치고 /board/list, 게시물 목록 화면으로 이동
 	}

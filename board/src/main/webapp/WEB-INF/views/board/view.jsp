@@ -106,6 +106,9 @@
 				<button type="button" class="btn btn-info" onclick="deleteAlert();">게시글 삭제</button>
 			</div>
 		</c:if>
+		<div>
+			<a href="fileDownload?fileName=${board.fileName}">${board.fileName}</a>
+		</div>
 	</div>
 </form>
 </div>

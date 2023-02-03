@@ -2,6 +2,7 @@ package com.board.dao;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -95,6 +96,7 @@ public class BoardDAOlmpl implements BoardDAO {
 		return sql.selectOne(namespace+".searchCount",data);
 		
 	}
+	
 	
 	
 

@@ -1,13 +1,17 @@
 package com.board.service;
 
 import java.util.List;
+import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.board.dao.BoardDAO;
 import com.board.domain.BoardVO;
+import com.board.util.FileUtils;
 
 @Service
 public class BoardServicelmpl implements BoardService {
@@ -15,17 +19,23 @@ public class BoardServicelmpl implements BoardService {
 	@Inject
 	private BoardDAO dao;
 
+	// 파일 유틸
+	@Resource(name="fileUtils")
+	private FileUtils fileUtils;
+	
 	// 게시물 목록
 	@Override
 	public List<BoardVO> list() throws Exception {
 		// TODO Auto-generated method stub
 		return dao.list();
 	}
+
 	// 게시물 작성
 	@Override
 	public void write(BoardVO vo) throws Exception {
 		// TODO Auto-generated method stub
 		dao.write(vo);
+		
 		
 	}
 	// 게시물 조회

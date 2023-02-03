@@ -16,9 +16,11 @@
 	<insert id="write" parameterType="com.board.domain.BoardVO">
 	<!-- parameter 타입은 매퍼에 들어오는 데이터  -->
 		insert into
-			tbl_board(title, content, writer,userId)
-				values(#{title}, #{content}, #{writer},#{userId})
+			tbl_board(num, title, content, writer,userId,file_name)
+				values(#{num}, #{title}, #{content}, #{writer},#{userId},#{fileName})
 	</insert>
+	
+	
 	
 	
  	<!-- 게시물 조회 -->
@@ -125,6 +127,8 @@
 	<if test='searchType.equals("writer")'>
 		where writer LIKE concat('%',#{keyword},'%')
 	</if>	
-</select>
+	</select>
+	
+	
 </mapper>
 

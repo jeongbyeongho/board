@@ -2,6 +2,8 @@ package com.board.domain;
 
 import java.util.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class BoardVO {
 
 	
@@ -19,6 +21,7 @@ public class BoardVO {
 	 */
 	
 	
+	
 	private int num;
 	private String title;
 	private String content;
@@ -27,9 +30,21 @@ public class BoardVO {
 	private int views;
 	private int updateViewCnt;
 	private String userId;
+	private String fileName;
+	private MultipartFile uploadFile;
 	
-
-	
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+	public MultipartFile getUploadFile() {
+		return uploadFile;
+	}
+	public void setUploadFile(MultipartFile uploadFile) {
+		this.uploadFile = uploadFile;
+	}
 	
 	public String getUserId() {
 		return userId;

@@ -71,7 +71,7 @@
 
 	<c:if test="${msg==null}">
 	<div id="forms">
-		<form name="io" method="post">
+		<form name="io" method="post" enctype="multipart/form-data">
 	<!-- input,text 입력 엘리먼트의 속성 값은 BoardVO와 동일해야 함 --> 
 	
 	
@@ -86,6 +86,10 @@
 						<label for="exampleFormControlTextarea1" class="form-label">내용</label>
 						<textarea class="form-control" id="exampleFormControlTextarea1" name="content" cols="50" rows="12" maxlength='400'>${view.content}</textarea>
 					</div>
+					
+					<label>파일 첨부</label>
+					<input type="file" name="uploadFile">
+					
 					<label>작성자</label>
 					<div class="col">
 						<input type="text" class="form-control" name="writer" value="${member.userName}" aria-label="First name" width="50%" readonly>
