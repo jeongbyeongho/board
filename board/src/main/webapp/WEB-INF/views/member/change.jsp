@@ -134,6 +134,23 @@
 		font-size:1.1vw;
 	}
 	
+	.result{
+		text-align:center;
+	}
+	.checkbox{
+		margin: auto;
+		text-align:center;
+	}
+	.nickCheck{
+		border:none;
+		padding:10px 9px;
+		border-radius:4px;
+		background-color:#1bbc9b;
+		color:white;
+	}
+	.nickCheck:hover{
+		background-color:grey;
+	}
 	
 	</style>
 	
@@ -175,7 +192,9 @@ function checkForm(){
 	    <label for="userName" class="String"></label><br>
 	    <input type="text" id="userName" name="userName" class="login" value="${member.userName}" placeholder="변경할 닉네임" />
 	   </div>
+	   <div class="checkbox">
 	   <button type="button" id="idhover" class="nickCheck">닉네임 중복 확인</button>
+	   </div>
 	   <p class="result">
   			<span class="msg">닉네임을 작성해주세요.</span>
   		</p>	   

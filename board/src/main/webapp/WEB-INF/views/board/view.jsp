@@ -27,6 +27,8 @@
 		}
 	</style>
 	<script>
+	console.log("${view.file_name}");
+	
 		function deleteAlert(){
 			if(!confirm("삭제 하시겠습니까?")){
 				return false;
@@ -107,7 +109,7 @@
 			</div>
 		</c:if>
 		<div>
-			<a href="fileDownload?fileName=${board.fileName}">${board.fileName}</a>
+			<a href="/fileDownload?file_name?=${view.file_name}">${view.file_name}</a>
 		</div>
 	</div>
 </form>

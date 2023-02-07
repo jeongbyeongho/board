@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class FileDownController {
 	@RequestMapping(value="/fileDownload")
-	public void fileDownload4(HttpServletRequest req, HttpServletResponse response)throws Exception{
-		String filename = req.getParameter("fileName");
+	public void fileDownload(HttpServletRequest req, HttpServletResponse response)throws Exception{
+		String filename = req.getParameter("file_name");
 		String realFilename="";
 		System.out.println(filename);
 		

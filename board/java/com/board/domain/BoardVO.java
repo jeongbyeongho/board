@@ -31,6 +31,13 @@ public class BoardVO {
 	private int updateViewCnt;
 	private String userId;
 	private String fileName;
+	private String file_name;
+	public String getFile_name() {
+		return file_name;
+	}
+	public void setFile_name(String file_name) {
+		this.file_name = file_name;
+	}
 	private MultipartFile uploadFile;
 	
 	public String getFileName() {
