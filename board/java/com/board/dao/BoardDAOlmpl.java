@@ -34,11 +34,32 @@ public class BoardDAOlmpl implements BoardDAO {
 		sql.insert(namespace + ".write", vo);
 	}
 	
+	public void insertFile(Map<String, Object> map) throws Exception{
+		sql.insert(namespace+".insertFile",map);
+		
+	}
+	
 	// 게시물 조회
 	@Override
 	public BoardVO view(int num) throws Exception{
 		return sql.selectOne(namespace+ ".view",num);
 		// selectOne -> 쿼리 결과가 없으면 null 반환
+	}
+	
+	// 첨부파일 조회
+	public List<Map<String, Object>> selectFileList(int num) throws Exception{
+		return sql.selectList(namespace+".selectFileList",num);	
+	}
+	
+	// 첨부파일 다운로드
+	@Override
+	public Map<String, Object> selectFileInfo(Map<String, Object> map) throws Exception{
+		return sql.selectOne(namespace+".selectFileInfo",map);
+	}
+	
+	// 첨부파일 수정
+	public void updateFile(Map<String, Object> map) throws Exception{
+		sql.update(namespace+".updateFile",map);
 	}
 	// 게시물 수정
 	@Override

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/file/*")
 public class FileDownController {
 	@RequestMapping(value="/fileDownload")
 	public void fileDownload(HttpServletRequest req, HttpServletResponse response)throws Exception{
@@ -30,6 +31,8 @@ public class FileDownController {
 		} catch(UnsupportedEncodingException ex) {
 			System.out.println("UnsupportedEncodingException");
 		}
+		
+		
 		realFilename = "D:\\upload\\" + filename;
 		System.out.println(realFilename);
 		File file1 = new File(realFilename);
@@ -39,7 +42,7 @@ public class FileDownController {
 		
 		response.setContentType("application/octer-stream");
 		response.setHeader("content-Transfer-Encoding", "binary;");
-		response.setHeader("content-Disposition", "attachment); filename=\""+ filename+"\"");
+		response.setHeader("content-Disposition", "attachment; filename=\""+ filename+"\"");
 		try {
 			OutputStream os = response.getOutputStream();
 			FileInputStream fis = new FileInputStream(realFilename);

@@ -11,9 +11,31 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
 	<script>
+	
+	
+		//$("#fileIndex").append("<div><input type='file' style='float:left;' name='file_"+(fileIndex++)+"'>"+"<button type='button' style='float:right;' id='fileAddBtn'>"+"추가"+"</button></div>");
+		
+	$(document).ready(function(){
+		fn_addFile();
+	})
+	
+	function fn_addFile(){
+		var fileIndex = 1;
+		$(".fileAdd_btn").on("click", function(){
+			$("#fileIndex").append("<div><input type='file' id='file' name='file_"+(fileIndex++)+"'>"+
+					//"<label for='file'>"+
+					//"<div class='btn-upload' style='padding:5px 5px; background-color:#5bc0de; border-radius:5px; color:white;'>"+'업로드'+"</div>"+"</label>"+
+					//"<input class='upload-name' value='파일 선택'>"+
+					"<button type='button' id='fileDelBtn'>"+"삭제"+"</button></div>");
+		});
+		$(document).on("click","#fileDelBtn", function(){
+			$(this).parent("div").remove();
+		});
+	}
+	
 	 function checkForm() {
 		 if(document.io.title.value == "") {
              alert("제목을 입력하세요");
@@ -55,11 +77,36 @@
 	}
 	.submit-button{
 		margin-left:-7px;
+		margin-top:5px;
 	}
 	.form-label{
 		margin-top:15px;
 	}
-	
+	.fileAdd_btn{
+		border:none;
+		border-radius:5px;
+		background-color:#5bc0de;
+		color:white;
+		padding:6px 6px;
+	}
+	.fileAdd_btn:hover{
+		background-color:#4e92a7;
+	}
+	#writer_name{
+		margin-top:8px;
+	}
+	#fileDelBtn{
+			border:none;
+			border-radius:5px;
+			padding:5px 10px;
+			color:white;
+			background-color:#5bc0de;
+			margin-top:5px;
+			margin-bottom:5px;
+	}
+	#fileDelBtn:hover{
+		background-color:#4e92a7;
+	}
 
 </style>
 
@@ -73,7 +120,7 @@
 	<div id="forms">
 		<form name="io" method="post" enctype="multipart/form-data">
 	<!-- input,text 입력 엘리먼트의 속성 값은 BoardVO와 동일해야 함 --> 
-	
+	 
 	
 			<div class="container">  
 				<!-- input,text 입력 엘리먼트의 속성 값은 BoardVO와 동일해야 함 -->
@@ -87,17 +134,22 @@
 						<textarea class="form-control" id="exampleFormControlTextarea1" name="content" cols="50" rows="12" maxlength='400'>${view.content}</textarea>
 					</div>
 					
-					<label>파일 첨부</label>
-					<input type="file" name="uploadFile">
-					
-					<label>작성자</label>
+					<label>첨부파일</label>
+					<div>
+						<a id="fileIndex"></a>
+					</div>
+		
+					<div>
+						<button class="fileAdd_btn" type="button">파일 추가</button>
+					</div>
+		
+					<label id="writer_name">작성자</label>
 					<div class="col">
 						<input type="text" class="form-control" name="writer" value="${member.userName}" aria-label="First name" width="50%" readonly>
 					</div>
 					<div class="col">
 			  		</div>
 				</div>
-					<br>
 		 	<div class="submit-button">
 		    	<button type="button" class="btn btn-info" onclick="checkForm()">작성</button>
 

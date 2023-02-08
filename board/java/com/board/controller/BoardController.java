@@ -8,14 +8,13 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -24,7 +23,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 // import com.board.dao.BoardDAO;
 import com.board.domain.BoardVO;
@@ -64,7 +63,7 @@ public class BoardController {
 	// 게시물 작성
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
 	public void getWrite(HttpSession session, Model model) throws Exception{
-	
+		Logger.info("게시물 작성 GET");
 		Object loginInfo = session.getAttribute("member");
 		
 		if(loginInfo == null) {
@@ -76,70 +75,58 @@ public class BoardController {
 	// 게시물 작성
 	@RequestMapping(value ="/write", method = RequestMethod.POST)
 	// post 방식으로 왔을 때만 로직 수행, get,post 상관없이 로직 수행을 위해선 method 부분 지우면 됨
-	public String postWrite(BoardVO vo,HttpSession session,Model model) throws Exception{
+	public String postWrite(BoardVO vo,HttpSession session,Model model, MultipartHttpServletRequest mpRequest) throws Exception{
 		Logger.info("글 작성");
 		
-		String fileName =null;
-		MultipartFile uploadFile = vo.getUploadFile();
-		if(!uploadFile.isEmpty()) {
-			String originalFileName = uploadFile.getOriginalFilename();
-			String ext=FilenameUtils.getExtension(originalFileName);
-			
-			UUID uuid = UUID.randomUUID();
-			fileName=uuid+"."+ext;
-			uploadFile.transferTo(new File("D:\\upload\\"+fileName));
-		}
-		vo.setFileName(fileName);
-		
-		
-		
+				
 		MemberVO member = (MemberVO)session.getAttribute("member");
 		vo.setUserId(member.getUserId());
 		model.addAttribute("id",vo);
 		model.addAttribute("write", vo);
-		service.write(vo);
+		service.write(vo,mpRequest);
 	
 		return "redirect:/board/listPageSearch?num=1";
 		// 모든 작업을 마치고 /board/list, 게시물 목록 화면으로 이동
 	}
-	
-/*	// 게시물 작성
-	@RequestMapping(value ="/write", method = RequestMethod.POST)
-	// post 방식으로 왔을 때만 로직 수행, get,post 상관없이 로직 수행을 위해선 method 부분 지우면 됨
-	public String postWrite(BoardVO vo) throws Exception{
-		service.write(vo);
-		return "redirect:/board/listPageSearch?num=1";
-		// 모든 작업을 마치고 /board/list, 게시물 목록 화면으로 이동
-	}
-*/
 	
 	// 게시물 조회
 	@RequestMapping(value ="/view", method = RequestMethod.GET)
 	public void getView(@RequestParam("num") int num, Model model) throws Exception{
+		Logger.info("게시물 조회");
 		BoardVO vo = service.view(num);
 		model.addAttribute("view", vo);
 		model.addAttribute("write", vo);
 		List<ReplyVO> reply = null;
 		reply = replyService.list(num);
 		model.addAttribute("reply",reply);
+		
+		List<Map<String, Object>> fileList = service.selectFileList(vo.getNum());
+		model.addAttribute("file",fileList);
 	}
 	// 게시물 수정
 	@RequestMapping(value="/modify", method = RequestMethod.GET)
 	public void getModify(@RequestParam("num") int num, Model model) throws Exception{
+		Logger.info("게시물 수정 GET");
 		BoardVO vo = service.view(num); 
 		model.addAttribute("views", vo);
+		
+		List<Map<String, Object>> fileList = service.selectFileList(vo.getNum());
+		model.addAttribute("file", fileList);
 	}
 	
 	// 게시물 수정
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
-	public String postModify(BoardVO vo) throws Exception {
-		service.modify(vo);
+	public String postModify(BoardVO vo,@RequestParam(value="fileNoDel[]") String[] files,
+			@RequestParam(value="fileNameDel[]")String[] fileNames,MultipartHttpServletRequest mpRequest) throws Exception {
+		Logger.info("게시물 수정 POST");
+		service.modify(vo,files,fileNames,mpRequest);
 		return "redirect:/board/view?num=" + vo.getNum();
 	}
 	
 	// 게시물 삭제
 	@RequestMapping(value ="/delete", method = RequestMethod.GET)
 	public String getDelete(@RequestParam("num")int num) throws Exception{
+		Logger.info("게시물 삭제 GET");
 		service.delete(num);
 		
 		return "redirect:/board/listPageSearch?num=1";
@@ -171,7 +158,7 @@ public class BoardController {
 					@RequestParam(value="searchType",required=false, defaultValue="title") String searchType,
 					@RequestParam(value="keyword",required=false, defaultValue="") String keyword) throws Exception{
 				
-				
+				Logger.info("리스트 페이지입니다.");
 				Page page = new Page();
 				// Page형의 page변수 생성
 				page.setNum(num);
@@ -194,14 +181,33 @@ public class BoardController {
 				
 			}
 			
+			// 파일 다운로드
+			@RequestMapping(value="/fileDown")
+			public void fileDown(@RequestParam Map<String, Object> map, HttpServletResponse response) throws Exception{
+				Logger.info("파일 다운로드");
+				Map<String, Object> resultMap = service.selectFileInfo(map);
+				String storedFileName = (String) resultMap.get("STORED_FILE_NAME");
+				String originalFileName = (String) resultMap.get("ORG_FILE_NAME");
+				
+				// 파일을 저장했던 위치에서 첨부파일을 읽어 byte[]형식으로 변환한다.
+				byte fileByte[] = org.apache.commons.io.FileUtils.readFileToByteArray(new File("D:\\upload\\"+storedFileName));
+				
+				response.setContentType("application/octet-stream");
+				response.setContentLength(fileByte.length);
+				response.setHeader("Content-Disposition",  "attachment; fileName=\""+URLEncoder.encode(originalFileName, "UTF-8")+"\";");
+				response.getOutputStream().write(fileByte);
+				response.getOutputStream().flush();
+				response.getOutputStream().close();
+				
+			}
 			
-			//@RequestMapping(value="/fileDownload")
-			@RequestMapping(value="/fileDownload")
+		/*
+			@RequestMapping(value="/fileDownload", method=RequestMethod.GET)
 			public void fileDownload(HttpServletRequest req, HttpServletResponse response,Model model,@RequestParam("num")int num)throws Exception{
 				BoardVO vo = service.view(num);
 				model.addAttribute("view", vo);
 				
-				String filename = req.getParameter("fileName");
+				String filename = req.getParameter("file_name");
 				String realFilename="";
 				System.out.println(filename);
 				
@@ -212,6 +218,7 @@ public class BoardController {
 						filename=URLEncoder.encode(filename, "UTF-8").replaceAll("\\+", "%20");
 					}else {
 						filename = new String(filename.getBytes("UTF-8"), "ISO-8859-1");
+						
 					}		
 				} catch(UnsupportedEncodingException ex) {
 					System.out.println("UnsupportedEncodingException");
@@ -241,7 +248,7 @@ public class BoardController {
 				} catch(Exception e) {
 					System.out.println("FileNotFoundException : " + e);
 				}
-			}
+			} */
 			
 	}
 	

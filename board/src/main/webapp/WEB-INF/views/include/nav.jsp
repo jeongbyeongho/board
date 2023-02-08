@@ -205,7 +205,8 @@ init();
 		
 		<c:if test="${member == null }">
 			<script>
-				location.href="/member/login"
+//				location.href="/member/login"
+				location.href="/"
 			</script>
 		</c:if>
 	</ul>

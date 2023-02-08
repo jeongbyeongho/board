@@ -17,7 +17,7 @@
 			width: 60%;
 		}
 		.submit-button{
-			margin-left:-7px;
+			margin-top:7px;
 		}
 		#nav{
 			padding-top:0px;
@@ -25,6 +25,29 @@
 		}
 		.form-label{
 			margin-top:15px;
+		}
+		#file_list{
+			margin-top:10px;
+		}
+		.fileAdd_btn{
+		border:none;
+		border-radius:5px;
+		background-color:#5bc0de;
+		color:white;
+		padding:6px 6px;
+		}
+		#fileDelBtn{
+			border:none;
+			border-radius:5px;
+			padding:5px 5px;
+			color:white;
+			background-color:#5bc0de;
+		}
+		.fileAdd_btn:hover{
+			background-color:#4e92a7;
+		}
+		#fileDelBtn:hover{
+			background-color:#4e92a7;
 		}
 	</style>
 <script>
@@ -37,8 +60,13 @@ if("${views.userId}" != "${member.userId}"){
 	console.log("${member.userId}");
 	alert("정상적인 루트로 이동해주세요.");
 	location.href="/board/listPageSearch?num=1";
-	
 }
+
+$(document).ready(function(){
+	fn_addFile();
+})
+
+	
 	function checkForm(){
 		if(document.io.title.value == "") {
         	alert("제목을 입력하세요");
@@ -52,6 +80,7 @@ if("${views.userId}" != "${member.userId}"){
         	document.io.title.focus();
        	 	return false;
         }
+		
 		
 		 if(document.io.content.value == "") {
              alert("내용을 입력하세요");
@@ -74,8 +103,9 @@ if("${views.userId}" != "${member.userId}"){
 	<%@ include file="../include/nav.jsp"%>
 </div>
 
-<form method="post" name="io">
-	
+<form method="post" name="io" enctype="multipart/form-data">
+	<input type="hidden" id="fileNoDel" name="fileNoDel[]" value=""> 
+	<input type="hidden" id="fileNameDel" name="fileNameDel[]" value=""> 
 	<div id="nav" class="container">  
 		<!-- input,text 입력 엘리먼트의 속성 값은 BoardVO와 동일해야 함 -->
 		<div class="row">
@@ -93,9 +123,42 @@ if("${views.userId}" != "${member.userId}"){
 			</div>
 			<div class="col">
 	  		</div>
+			<label id="file_list">첨부파일</label>
+	  		<div id="fileIndex">
+	  		
+				<c:forEach var="file" items="${file}" varStatus="var">
+				<div>
+					<input type="hidden" id="FILE_NO" name="FILE_NO_${var.index}" value="${file.FILE_NO}">
+					<input type="hidden" id="FILE_NAME" name="FILE_NAME" value="FILE_NO_${var.index}">
+			  		<a href="#" id="fileName" onclick="return false;">${file.ORG_FILE_NAME}</a>(${file.FILE_SIZE}kb)
+			  		<button id="fileDelBtn" onclick="fn_del('${file.FILE_NO}','FILE_NO_${var.index}');" type="button">삭제</button><br>
+		  		</div>
+				</c:forEach>
+			</div>
+			<div><button type="button" class="fileAdd_btn">파일 추가</button></div>
+		<script>
+		function fn_addFile(){
+			var fileIndex = 1;
+			$(".fileAdd_btn").on("click", function(){
+				$("#fileIndex").append("<div><input type='file' id='file' name='file_"+(fileIndex++)+"'>"+
+						"<button type='button' id='fileDelBtn' style='border:none; border-radius:5px; margin-top:5px; margin-bottom:5px; padding:5px 10px;'>"+"삭제"+"</button></div>");
+			});
+			$(document).on("click","#fileDelBtn", function(){
+				$(this).parent("div").remove();
+			});
+		}
 			
-		</div>
-		<br>
+			var fileNoArry = new Array();
+			var fileNameArry = new Array();
+			function fn_del(value, name){
+				
+				fileNoArry.push(value);
+				fileNameArry.push(name);
+				$("#fileNoDel").attr("value", fileNoArry);
+				$("#fileNameDel").attr("value", fileNameArry);
+			}
+		</script>
+		
 		<div class="submit-button">
 			<button type="button" class="btn btn-info" onclick="checkForm()">완료</button>
 		</div>

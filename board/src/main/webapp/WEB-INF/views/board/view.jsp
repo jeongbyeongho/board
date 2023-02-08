@@ -25,9 +25,11 @@
 			list-style:none;
 			padding:0px;
 		}
+		#file_list{
+			margin-top:10px;
+		}
 	</style>
 	<script>
-	console.log("${view.file_name}");
 	
 		function deleteAlert(){
 			if(!confirm("삭제 하시겠습니까?")){
@@ -65,6 +67,13 @@
 			 document.frm.submit();
 		}
 		
+		function fn_fileDown(fileNo){
+			var formObj = $("form[name='readForm']");
+			$("#FILE_NO").attr("value",fileNo);
+			formObj.attr("action","/board/fileDown");
+			formObj.submit();
+		}
+		
 		//history.replaceState({}, null, location.pathname);
 	</script>
 </head>
@@ -77,7 +86,7 @@
 
 <!-- input,text 입력 엘리먼트의 속성 값은 BoardVO와 동일해야 함 -->
 <div id="center">
-<form method="post">
+<form method="post" name="readForm">
 	<br>
 	<div id="nav" class="container">
 		<!-- input,text 입력 엘리먼트의 속성 값은 BoardVO와 동일해야 함 -->
@@ -96,6 +105,15 @@
 			</div>
 			<div class="col">
 	  		</div>
+	  	
+	  		<label id="file_list">첨부파일</label>
+	  	
+	  		<div>
+				<input type="hidden" id="FILE_NO" name="FILE_NO" value="">
+		  		<c:forEach var="file" items="${file}">
+		  			<a href="#" onclick="fn_fileDown('${file.FILE_NO}'); return false;">${file.ORG_FILE_NAME}</a>(${file.FILE_SIZE}kb)<br>
+				</c:forEach>
+			</div>
 			
 		</div>
 
@@ -109,7 +127,7 @@
 			</div>
 		</c:if>
 		<div>
-			<a href="/fileDownload?file_name?=${view.file_name}">${view.file_name}</a>
+			<a href="/file/fileDownload?file_name=${view.file_name}">${view.file_name}</a>
 		</div>
 	</div>
 </form>

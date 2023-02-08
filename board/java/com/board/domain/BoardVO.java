@@ -20,8 +20,6 @@ public class BoardVO {
 	
 	 */
 	
-	
-	
 	private int num;
 	private String title;
 	private String content;
@@ -30,7 +28,7 @@ public class BoardVO {
 	private int views;
 	private int updateViewCnt;
 	private String userId;
-	private String fileName;
+	//private String fileName;
 	private String file_name;
 	public String getFile_name() {
 		return file_name;
@@ -40,12 +38,12 @@ public class BoardVO {
 	}
 	private MultipartFile uploadFile;
 	
-	public String getFileName() {
-		return fileName;
-	}
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
+//	public String getFileName() {
+//		return fileName;
+//	}
+//	public void setFileName(String fileName) {
+//		this.fileName = fileName;
+//	}
 	public MultipartFile getUploadFile() {
 		return uploadFile;
 	}
