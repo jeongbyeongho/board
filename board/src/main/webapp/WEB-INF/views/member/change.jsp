@@ -130,9 +130,6 @@
 		margin:auto;
 	
 	}
-	span{
-		font-size:1.1vw;
-	}
 	
 	.result{
 		text-align:center;
