@@ -76,18 +76,7 @@ import com.board.service.MemberService;
 			
 			System.out.println("userId:" +vo.getUserId());
 			System.out.println("userId:" +vo.getUserId().isEmpty());
-			
-			/*
-			  System.out.println(session.getMaxInactiveInterval()/60);
-			// 세션시간 30분
-			System.out.println(session.getCreationTime());
-			java.util.Date d = new java.util.Date(session.getCreationTime());
-			System.out.println("마지막으로 엑세스한 시간"+session.getId());
-			
-			System.out.println("세션 생성한 시간"+d);
-			*/
-			// String sessionTime =formatter.format(time);
-			// session.setAttrtibute로 시간 작성해서 최근접속 기록 남기기 
+
 		}else{
 			session.setAttribute("err", "로그인 정보가 올바르지 않아요.");
 			session.setAttribute("member", null);
@@ -138,6 +127,7 @@ import com.board.service.MemberService;
 		Logger.info("post nickCheck");
 		String userName=req.getParameter("userName");
 		MemberVO nickCheck = service.nickCheck(userName);
+		
 		
 		int result=0;
 		if(nickCheck!=null) {
@@ -204,11 +194,6 @@ import com.board.service.MemberService;
 	@RequestMapping(value="/checkPw", method=RequestMethod.POST)
 	public boolean checkPw(MemberVO vo,HttpServletRequest req)throws Exception{
 		
-//		String userId = req.getParameter("userId");
-//		String userPwd = req.getParameter("userPwd");
-//		String pwd = passEncoder.encode(userPwd);
-//		vo.setUserPwd(pwd);
-
 		MemberVO login = service.login(vo);
 		boolean pwdChk = passEncoder.matches(vo.getUserPwd(), login.getUserPwd());
 		return pwdChk;
@@ -222,18 +207,17 @@ import com.board.service.MemberService;
 	@RequestMapping(value="/withdrawal",method=RequestMethod.POST)
 	public String postWithdrawal(MemberVO vo,HttpSession session,RedirectAttributes rttr,HttpServletRequest req) throws Exception{
 		 Logger.info("회원 탈퇴 POST");
-		String inputpass = req.getParameter("Pwd");
-		String Pwd = passEncoder.encode(inputpass);
-		vo.setUserPwd(Pwd);
+//		String inputpass = req.getParameter("Pwd");
+//		String Pwd = passEncoder.encode(inputpass);
 		
+//		vo.setUserPwd(Pwd);
 		service.withdrawal(vo);
 		session.invalidate();
 		return "redirect:/";
-		 
-		 
+	
+		
 		 
 		// MemberVO login = service.login(vo);
-		//service.withdrawal(vo);
 	}
 		
 	

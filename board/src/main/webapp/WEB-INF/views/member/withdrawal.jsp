@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>회원 탈퇴</title>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<!--  action="/member/withdrawal" -->
 <style>
 *{
 		box-sizing: border-box;
@@ -15,7 +16,19 @@
 		background: grey;
 	}
 	/* 로그인 */
-	form{
+	/*form{
+		width:350px;
+		border: NONE;
+		border-radius:10px;
+		padding: 15px;
+		
+		background-color:#D8D8D8;
+		position:absolute;
+		top:50%;
+		left:50%;
+		transform:translate(-50%,-50%);
+	}*/
+	#formcss{
 		width:350px;
 		border: NONE;
 		border-radius:10px;
@@ -138,6 +151,7 @@
 	
 </head>
 <body>
+<div id="formcss">
 	<form role="form" method="post" id="deleteForm" autocomplete="off" name="io">
 		<h1>회원 탈퇴 👊</h1>
 		
@@ -155,18 +169,13 @@
 	    <label for="Pwd" class="String"></label><br>
 	    <input type="password" id="Pwd" name="Pwd" class="login" placeholder="비밀번호 재입력 " />
 	   </div>
-	   	   
-	   <div>
-		   <button type="button" class="button_login" id="submit" onclick="return submitBtn()">회원 탈퇴</button>    
-		   <button type="button" class="button_login" onclick="location.href='/board/listPageSearch?num=1'">메인으로</button>
-	   </div>
-	  
+		   
 	</form>
+	 	   <button type="button" class="button_login" id="submit" onclick="return submitBtn()">회원 탈퇴</button>       	   
+		   <button type="button" class="button_login" onclick="location.href='/board/listPageSearch?num=1'">메인으로</button>
+</div>
+
 	<script>
-	
-	
-	
-	
 	function submitBtn(){		
 	
 	//$("#submit").click(function(){
@@ -183,39 +192,37 @@
 			return false;
 		}
 		if($("#userPwd").val()!=$("#Pwd").val()){
-			alert("비밀번호가 옳지 않습니다.\n다시 입력해주세요.");
+			alert("비밀번호가 동일하지 않습니다.\n다시 입력해주세요.");
 			$("#userPwd").val()="";
 			$("#Pwd").val()="";
 			$("#userPwd").focus();
 			return false;
 		}
-	
-	$.ajax({
-		url : "/member/checkPw",
-		type : "POST",
-		dateType : "json",
-		data : $("#deleteForm").serializeArray(),
-		//data:query,
-		async:false,
-		success: function(data){
-			
-			if(data==true){
-				if(confirm("회원탈퇴하시겠습니까?")){
-					$("#deleteForm").submit();
-					flag=true;
+		$.ajax({
+			url : "/member/checkPw",
+			type : "POST",
+			dateType : "json",
+			data : $("#deleteForm").serializeArray(),
+			//data:query,
+			async:false,
+			success: function(data){
+				if(data==true){
+					if(confirm("회원탈퇴하시겠습니까?")){
+						$('#deleteForm').submit();
+						flag=true;
+					}
+					$('#deleteForm').submit();
+				}else{
+					alert("비밀번호가 틀렸습니다.");
+					flag=false;
+					$("#userPwd").focus();
+					
 				}
-			}else{
-				alert("비밀번호가 틀렸습니다.");
-				flag=false;
-				$("#userPwd").focus();
-				console.log(document.getElementById('userPwd').value);
-				console.log(document.getElementById('Pwd').value);
 			}
-			
-		}
-	});
-	return flag;
-};
+		});
+		return flag;
+	}
+	
 
 
 

@@ -11,7 +11,7 @@
 	<!--  table에 값을 추가하는 insert query -->
 	
 	<select id="login" resultType="com.board.domain.MemberVO">
-		select userId,userName
+		select userId,userName,userPwd
 		from myMember
 		where userId = #{userId} and userPwd = #{userPwd};
 	</select>
@@ -54,7 +54,8 @@
 	
 	<delete id="withdrawal">
 		delete from myMember
-		where userId=#{userId} AND userPwd=#{userPwd}
+		where userId=#{userId}
+		<!-- and userPwd=#{userPwd}-->
 	</delete>
 	
 </mapper>

@@ -63,7 +63,19 @@
 		background-color:#2eb6bb;
 		color:#eeeff1;
 	}
+	.nickCheck{
+		border:none;
+		border-radius:5px;
+		width:50%;
+		height:35px;
+		background-color:#2eb6bb;
+		color:#eeeff1;
+		margin-top:16px;
+	}
 	#idhover:hover{
+		background-color:#369599;
+	}
+	#namehover:hover{
 		background-color:#369599;
 	}
 	#submit:hover{
@@ -194,7 +206,11 @@
  <p>
   <label for="userName">닉네임</label>
   <input type="text"  class="login" id="userName" name="userName" placeholder="닉네임"/>
+  <button type="button" id="namehover" class="nickCheck">닉네임 중복 확인</button>
  </p>
+ <p class="result2">
+  		<span class="msg2">닉네임를 확인해주세요.</span>
+  </p>
 
 <script>
 
@@ -207,15 +223,22 @@ $(".idCheck").click(function(){
     type : "post",
     data : query,
     success : function(data) {
+    	
+    	const idvalue=$("#userId").val().trim();
+    	if(idvalue.length<1){
+    		alert("아이디를 입력해주세요");
+    		$("#userId").focus();
+    		return false;
+    	}
     
      if(data == 1) {
       $(".result .msg").text("사용 불가");
       $(".result .msg").attr("style", "color:red","font-weight:bold");      
       $("#submit").attr("disabled","disabled");
-     } else {
+     }else {
       $(".result .msg").text("사용 가능");
       $(".result .msg").attr("style", "color:#00f","font-weight:bold");
-      $("#submit").removeAttr("disabled");
+      //$("#submit").removeAttr("disabled");
      }
     }
    });  // ajax 끝
@@ -227,6 +250,68 @@ $("#userId").keyup(function(){
 	$(".result .msg").attr("style","color:red");
 	$("#submit").attr("disabled","disabled");
 })
+
+$(".nickCheck").click(function(){
+   
+   var query = {userName : $("#userName").val()};
+   
+   $.ajax({
+    url : "/member/nickCheck",
+    type : "post",
+    data : query,
+    success : function(data) {
+    
+    	const idvalue=$("#userName").val().trim();
+    	if(idvalue.length<1){
+    		alert("닉네임을 입력해주세요");
+    		$("#userName").focus();
+    		return false;
+    	}	
+    	
+    	var query2 = {userId : $("#userId").val()};
+    	   
+    	   $.ajax({
+    	    url : "/member/idCheck",
+    	    type : "post",
+    	    data : query2,
+    	    success : function(data) {
+    	    	
+    	    	const idvalue=$("#userId").val().trim();
+    	    	if(idvalue.length<1){
+    	    		alert("아이디를 입력해주세요");
+    	    		$("#userId").focus();
+    	    		return false;
+    	    	}
+    	    
+    	     if(data == 1) {
+    	      $(".result .msg").text("사용 불가");
+    	      alert("이미 존재하는 아이디입니다.");
+    	      $(".result .msg").attr("style", "color:red","font-weight:bold");      
+    	      $("#submit").attr("disabled","disabled");
+    	     }else {
+    	      $(".result .msg").text("사용 가능");
+    	      $(".result .msg").attr("style", "color:#00f","font-weight:bold");
+    	      //$("#submit").removeAttr("disabled");
+    	     }
+    	    }
+    	   });  // ajax 끝	
+    	
+    	
+     if(data == 1) {
+      $(".result2 .msg2").text("사용 불가");
+      $(".result2 .msg2").attr("style", "color:red","font-weight:bold");      
+      $("#submit").attr("disabled","disabled");
+     } else {
+      $(".result2 .msg2").text("사용 가능");
+      $(".result2 .msg2").attr("style", "color:#00f","font-weight:bold");
+      $("#submit").removeAttr("disabled");
+     }
+     
+     
+    }
+   });  // ajax 끝
+});
+
 </script> 
 	
  
